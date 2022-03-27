@@ -1,10 +1,6 @@
-class ResourceController < ApplicationController
+class ResourcesController < ApplicationController
   def index
-    render json: {aa: 'dfdffd'}
-  end
-
-  def new
-
+    render json: Resource.all
   end
 
   def create
