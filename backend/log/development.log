@@ -35,3 +35,87 @@ Migrating to CreateResources (20220327191806)
   [1m[36mTRANSACTION (1.3ms)[0m  [1m[36mcommit transaction[0m
   [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
   [1m[36mActiveRecord::SchemaMigration Pluck (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mResource Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "resources" LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to RenameColumnType (20220403174816)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aresources" ("id" integer NOT NULL PRIMARY KEY, "name" varchar NOT NULL, "description" text DEFAULT NULL, "url" varchar DEFAULT NULL, "media" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.4ms)[0m  [1m[32mINSERT INTO "aresources" ("id","name","description","url","media","created_at","updated_at")
+                     SELECT "id","name","description","url","type","created_at","updated_at" FROM "resources"[0m
+  [1m[35m (0.7ms)[0m  [1m[35mDROP TABLE "resources"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "resources" ("id" integer NOT NULL PRIMARY KEY, "name" varchar NOT NULL, "description" text DEFAULT NULL, "url" varchar DEFAULT NULL, "media" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "resources" ("id","name","description","url","media","created_at","updated_at")
+                     SELECT "id","name","description","url","media","created_at","updated_at" FROM "aresources"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE "aresources"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220403174816"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to RenameColumnMedia (20220403175139)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aresources" ("id" integer NOT NULL PRIMARY KEY, "name" varchar NOT NULL, "description" text DEFAULT NULL, "url" varchar DEFAULT NULL, "medium" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aresources" ("id","name","description","url","medium","created_at","updated_at")
+                     SELECT "id","name","description","url","media","created_at","updated_at" FROM "resources"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE "resources"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "resources" ("id" integer NOT NULL PRIMARY KEY, "name" varchar NOT NULL, "description" text DEFAULT NULL, "url" varchar DEFAULT NULL, "medium" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "resources" ("id","name","description","url","medium","created_at","updated_at")
+                     SELECT "id","name","description","url","medium","created_at","updated_at" FROM "aresources"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aresources"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20220403175139"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mResource Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "resources" LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mResource Create (0.5ms)[0m  [1m[32mINSERT INTO "resources" ("name", "description", "url", "medium", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Specimen Days"], ["description", "Provident aut est. Quod aliquam non. Animi veniam rerum."], ["url", "http://medhurst.io/chun"], ["medium", 2], ["created_at", "2022-04-03 17:52:44.796778"], ["updated_at", "2022-04-03 17:52:44.796778"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mResource Create (0.3ms)[0m  [1m[32mINSERT INTO "resources" ("name", "description", "url", "medium", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "The Mermaids Singing"], ["description", "Tempore accusantium aut. Perferendis ipsa qui. In molestiae atque."], ["url", "http://kohler.biz/donn"], ["medium", 0], ["created_at", "2022-04-03 17:52:44.802214"], ["updated_at", "2022-04-03 17:52:44.802214"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mResource Create (0.4ms)[0m  [1m[32mINSERT INTO "resources" ("name", "description", "url", "medium", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "The Golden Apples of the Sun"], ["description", "Repudiandae porro libero. Ut est dolores. Praesentium atque nulla."], ["url", "http://thompson.info/willodean"], ["medium", 2], ["created_at", "2022-04-03 17:52:44.806498"], ["updated_at", "2022-04-03 17:52:44.806498"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mResource Create (0.3ms)[0m  [1m[32mINSERT INTO "resources" ("name", "description", "url", "medium", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Ring of Bright Water"], ["description", "Optio eos eos. Autem dolorem repellendus. Ad veniam harum."], ["url", "http://champlin.com/charley.frami"], ["medium", 2], ["created_at", "2022-04-03 17:52:44.810888"], ["updated_at", "2022-04-03 17:52:44.810888"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mResource Create (0.3ms)[0m  [1m[32mINSERT INTO "resources" ("name", "description", "url", "medium", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Quo Vadis"], ["description", "Quaerat fuga suscipit. Aut nesciunt omnis. Veniam culpa debitis."], ["url", "http://kshlerin.info/carita"], ["medium", 0], ["created_at", "2022-04-03 17:52:44.814999"], ["updated_at", "2022-04-03 17:52:44.814999"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mResource Create (0.4ms)[0m  [1m[32mINSERT INTO "resources" ("name", "description", "url", "medium", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "No Highway"], ["description", "Veritatis optio minima. Nostrum ut ut. Et delectus perspiciatis."], ["url", "http://luettgen.com/joel_turcotte"], ["medium", 1], ["created_at", "2022-04-03 17:52:44.819555"], ["updated_at", "2022-04-03 17:52:44.819555"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mResource Create (0.3ms)[0m  [1m[32mINSERT INTO "resources" ("name", "description", "url", "medium", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Rosemary Sutcliff"], ["description", "Quis numquam nostrum. Harum amet alias. Nemo aut repudiandae."], ["url", "http://champlin.name/ali_schinner"], ["medium", 1], ["created_at", "2022-04-03 17:52:44.824608"], ["updated_at", "2022-04-03 17:52:44.824608"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mResource Create (0.3ms)[0m  [1m[32mINSERT INTO "resources" ("name", "description", "url", "medium", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "In Death Ground"], ["description", "Architecto qui non. Quasi est cum. Eos et beatae."], ["url", "http://davis.com/daisey"], ["medium", 0], ["created_at", "2022-04-03 17:52:44.829199"], ["updated_at", "2022-04-03 17:52:44.829199"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mResource Create (0.3ms)[0m  [1m[32mINSERT INTO "resources" ("name", "description", "url", "medium", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "A Many-Splendoured Thing"], ["description", "Officia in velit. Consequatur eos consequatur. Praesentium est consectetur."], ["url", "http://monahan.info/jeanetta"], ["medium", 0], ["created_at", "2022-04-03 17:52:44.833494"], ["updated_at", "2022-04-03 17:52:44.833494"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mResource Create (0.3ms)[0m  [1m[32mINSERT INTO "resources" ("name", "description", "url", "medium", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Ego Dominus Tuus"], ["description", "Voluptas qui et. Iure quia quae. Aliquid delectus eum."], ["url", "http://gutkowski-rice.org/mack_rutherford"], ["medium", 2], ["created_at", "2022-04-03 17:52:44.837422"], ["updated_at", "2022-04-03 17:52:44.837422"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
