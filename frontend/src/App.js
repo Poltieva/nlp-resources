@@ -5,7 +5,7 @@ import React from 'react';
 function App() {
   return (
     <div className="App">
-        <p>NLP resources:</p>
+        <h1>NLP resources:</h1>
         <ResourcesList />
     </div>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import Resource from './Resource';
+import './Resource.css'
 
 class ResourcesList extends React.Component {
     // Constructor
@@ -29,12 +30,20 @@ class ResourcesList extends React.Component {
     render() {
         const {DataisLoaded, items} = this.state;
         if (!DataisLoaded) return <div>
-            <h1> Pleses wait some time.... </h1></div>;
+            <p> Please wait some time.... </p></div>;
 
         return (
-            items.map(resource => {
-                return <Resource key={resource.id} resource={resource}/>
-            })
+            <main>
+                {
+                    items.map(resource => {
+                        return (
+                            <div key={resource.id} className="Resource">
+                                <Resource resource={resource}/>
+                            </div>
+                        )
+                    })
+                }
+            </main>
         )
     }
 }
