@@ -119,3 +119,30 @@ Migrating to RenameColumnMedia (20220403175139)
   [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
   [1m[36mResource Create (0.3ms)[0m  [1m[32mINSERT INTO "resources" ("name", "description", "url", "medium", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["name", "Ego Dominus Tuus"], ["description", "Voluptas qui et. Iure quia quae. Aliquid delectus eum."], ["url", "http://gutkowski-rice.org/mack_rutherford"], ["medium", 2], ["created_at", "2022-04-03 17:52:44.837422"], ["updated_at", "2022-04-03 17:52:44.837422"]]
   [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mResource Load (0.2ms)[0m  [1m[34mSELECT "resources".* FROM "resources"[0m
+Started GET "/" for 127.0.0.1 at 2022-04-03 19:57:23 +0200
+  [1m[35m (1.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by ResourcesController#index as */*
+  [1m[36mResource Load (0.5ms)[0m  [1m[34mSELECT "resources".* FROM "resources"[0m
+  ↳ app/controllers/resources_controller.rb:3:in `index'
+Completed 200 OK in 58ms (Views: 44.1ms | ActiveRecord: 0.9ms | Allocations: 25163)
+
+
+Started GET "/" for ::1 at 2022-04-03 19:58:47 +0200
+Processing by ResourcesController#index as */*
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ app/controllers/resources_controller.rb:3:in `index'
+  [1m[36mResource Load (0.1ms)[0m  [1m[34mSELECT "resources".* FROM "resources" ORDER BY "resources"."name" ASC[0m
+  ↳ app/controllers/resources_controller.rb:3:in `index'
+Completed 200 OK in 9ms (Views: 3.6ms | ActiveRecord: 0.9ms | Allocations: 6793)
+
+
+Started GET "/" for ::1 at 2022-04-03 19:58:50 +0200
+Processing by ResourcesController#index as */*
+  [1m[36mResource Load (0.2ms)[0m  [1m[34mSELECT "resources".* FROM "resources" ORDER BY "resources"."name" ASC[0m
+  ↳ app/controllers/resources_controller.rb:3:in `index'
+Completed 200 OK in 4ms (Views: 3.1ms | ActiveRecord: 0.2ms | Allocations: 2083)
+
+

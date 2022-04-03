@@ -16,7 +16,7 @@ class ResourcesList extends React.Component {
     // execute the code
     componentDidMount() {
         fetch(
-            "https://jsonplaceholder.typicode.com/users")
+            process.env.REACT_APP_API_URL)
             .then((res) => res.json())
             .then((json) => {
                 this.setState({
