@@ -1,6 +1,6 @@
 import React from 'react';
 import Resource from './Resource';
-import './Resource.css'
+import './css/Resource.css'
 
 class ResourcesList extends React.Component {
     // Constructor
