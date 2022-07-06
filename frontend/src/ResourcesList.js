@@ -34,15 +34,19 @@ class ResourcesList extends React.Component {
 
         return (
             <main>
-                {
-                    items.map(resource => {
-                        return (
-                            <div key={resource.id} className="Resource">
-                                <Resource resource={resource}/>
-                            </div>
-                        )
-                    })
-                }
+                <section>
+                    <section className="text-gray-600 body-font">
+                        {
+                            items.map(resource => {
+                                return (
+                                    <div key={resource.id} className="container px-5 mx-auto">
+                                        <Resource resource={resource}/>
+                                    </div>
+                                )
+                            })
+                        }
+                    </section>
+                </section>
             </main>
         )
     }
