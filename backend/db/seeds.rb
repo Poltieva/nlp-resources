@@ -6,7 +6,9 @@ if Resource.all.empty?
       name: Faker::Book.title,
       description: Faker::Lorem.paragraph,
       url: Faker::Internet.url,
-      medium: ['book', 'video', 'course'].sample
+      medium: %w[book video course].sample,
+      author: Faker::Name.name,
+      keywords: %w[spaCy nltk English language pandas].sample(2)
     )
   end
 end

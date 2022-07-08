@@ -8,4 +8,9 @@ class Resource < ApplicationRecord
   }, _prefix: true
 
   validates_presence_of :name, :medium
+
+  serialize :keywords
+  after_initialize do |r|
+    r.keywords = [] if r.keywords == nil
+  end
 end

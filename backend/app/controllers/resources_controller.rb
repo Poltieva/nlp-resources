@@ -2,7 +2,7 @@
 
 class ResourcesController < ApplicationController
   def index
-    render json: Resource.all
+    render json: Resource.all, except: [:created_at, :updated_at]
   end
 
   def create; end
