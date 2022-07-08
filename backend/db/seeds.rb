@@ -8,7 +8,8 @@ if Resource.all.empty?
       url: Faker::Internet.url,
       medium: %w[book video course].sample,
       author: Faker::Name.name,
-      keywords: %w[spaCy nltk English language pandas].sample(2)
+      keywords: %w[spaCy nltk English language pandas].sample(2),
+      image_url: Faker::LoremFlickr.image
     )
   end
 end
