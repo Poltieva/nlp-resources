@@ -12,11 +12,21 @@ function Resource({resource}) {
             </div>
             <div className="flex-grow sm:text-left text-center mt-6 sm:mt-0">
                 <a href={`${process.env.REACT_APP_API_URL}/resources/${resource.id}`}
-                   className="text-black text-2xl title-font font-bold mb-2">
+                   className="text-black text-2xl title-font font-bold mb-2 underline">
                     {resource.name}
                 </a>
-                <p>Author: TODO</p>
-                <p>Type: {resource.medium}</p>
+                <div className="py-1">
+                    <div className=" inline-block mr-2">
+                        <div className="flex  pr-2 h-full items-center">
+                            <p>Author: TODO</p>
+                        </div>
+                    </div>
+                    <div className=" inline-block mr-2">
+                        <div className="flex  pr-2 h-full items-center">
+                            <p>Type: {resource.medium}</p>
+                        </div>
+                    </div>
+                </div>
                 <p>Description:</p>
                 <p className="px-5">{resource.description}</p>
                 <p>Url: {resource.url}</p>
