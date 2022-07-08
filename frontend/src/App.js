@@ -1,4 +1,3 @@
-import './css/App.css';
 import Resources from './components/Resources';
 import React from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
@@ -7,7 +6,7 @@ import NavBar from "./components/NavBar";
 
 function App() {
   return (
-    <div className="App bg-gray-100">
+    <div className="App">
         <BrowserRouter>
             <NavBar />
             <Routes>

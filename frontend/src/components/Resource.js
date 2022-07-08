@@ -1,4 +1,3 @@
-import './css/Resource.css';
 function Resource({resource}) {
     return (
 

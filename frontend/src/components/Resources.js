@@ -1,4 +1,4 @@
-import ResourcesList from "../ResourcesList";
+import ResourcesList from "./ResourcesList";
 
 function Resources() {
     return (
