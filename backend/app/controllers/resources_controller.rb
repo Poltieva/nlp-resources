@@ -1,17 +1,13 @@
+# frozen_string_literal: true
+
 class ResourcesController < ApplicationController
   def index
     render json: Resource.all
   end
 
-  def create
+  def create; end
 
-  end
+  def update; end
 
-  def update
-
-  end
-
-  def destroy
-
-  end
+  def destroy; end
 end
