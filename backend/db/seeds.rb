@@ -13,3 +13,9 @@ if Resource.all.empty?
     )
   end
 end
+
+if Doorkeeper::Application.count.zero?
+  Doorkeeper::Application.create!(name: "Web client", redirect_uri: "", scopes: "")
+  Doorkeeper::Application.create!(name: "OS client", redirect_uri: "", scopes: "")
+  Doorkeeper::Application.create!(name: "React", redirect_uri: "", scopes: "")
+end
