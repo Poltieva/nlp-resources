@@ -14,9 +14,10 @@ import {
 } from "@mui/material"
 import {VisibilityOff, Visibility} from "@mui/icons-material";
 
-function Login() {
+function Signup() {
     const emailRef = useRef<HTMLInputElement>null
     const passwordRef = useRef<HTMLInputElement>null
+    const passwordConfirmationRef = useRef<HTMLInputElement>null
     let errorMessages = []
     const [errors, setErrors] = useState([])
     const [showPassword, setShowPassword] = useState(false)
@@ -36,11 +37,18 @@ function Login() {
     async function handleSubmit(event) {
         event.preventDefault()
         setErrors([])
-        if (emailRef?.current === undefined
-        || emailRef.current.value === ""
-        || passwordRef?.current === undefined
-        || passwordRef.current.value === "") {
+        if (
+            emailRef?.current === undefined
+            || emailRef.current.value === ""
+            || passwordRef?.current === undefined
+            || passwordRef.current.value === ""
+            || passwordConfirmationRef?.current === undefined
+            || passwordConfirmationRef.current.value === ""
+        ) {
             return setErrors(["Please fill out all fields"])
+        }
+        if (passwordConfirmationRef.current.value !== passwordRef.current.value) {
+            return setErrors(["Passwords don't match"])
         }
         // const payload = {
         //     email: emailRef.current.value,
@@ -58,16 +66,30 @@ function Login() {
 
 
     const passwordInput = <OutlinedInput id="password"
-         type={showPassword ? 'text' : 'password'}
-         inputRef={passwordRef}
-         endAdornment={<InputAdornment position="end">
-             <IconButton aria-label="toggle password visibility"
-                 onClick={() => setShowPassword(!showPassword)}
-                 onMouseDown={() => setShowPassword(!showPassword)}
-                 edge="end">
-                 {showPassword ? <Visibility /> : <VisibilityOff />}
-             </IconButton>
-         </InputAdornment>}
+                                         type={showPassword ? 'text' : 'password'}
+                                         inputRef={passwordRef}
+                                         endAdornment={<InputAdornment position="end">
+                                             <IconButton aria-label="toggle password visibility"
+                                                         onClick={() => setShowPassword(!showPassword)}
+                                                         onMouseDown={() => setShowPassword(!showPassword)}
+                                                         edge="end">
+                                                 {showPassword ? <Visibility /> : <VisibilityOff />}
+                                             </IconButton>
+                                         </InputAdornment>}
+    >
+
+    </OutlinedInput>
+    const passwordConfirmationInput = <OutlinedInput id="password-confirmation"
+                                         type={showPassword ? 'text' : 'password'}
+                                         inputRef={passwordConfirmationRef}
+                                         endAdornment={<InputAdornment position="end">
+                                             <IconButton aria-label="toggle password visibility"
+                                                         onClick={() => setShowPassword(!showPassword)}
+                                                         onMouseDown={() => setShowPassword(!showPassword)}
+                                                         edge="end">
+                                                 {showPassword ? <Visibility /> : <VisibilityOff />}
+                                             </IconButton>
+                                         </InputAdornment>}
     >
 
     </OutlinedInput>
@@ -78,7 +100,7 @@ function Login() {
                     <CardContent>
                         <Container maxWidth="sm">
                             <Typography variant="h2" color="text.primary" gutterBottom>
-                                Login
+                                Sign up
                             </Typography>
                             {errors.length > 0 ?
                                 <Alert severity="error" aria-live="assertive">
@@ -103,6 +125,14 @@ function Login() {
                                         {passwordInput}
                                     </FormControl>
                                 </FormGroup>
+                                <FormGroup row={true} id="password-confirmation-group" sx={{marginTop: "1em"}}>
+                                    <FormControl fullWidth>
+                                        <InputLabel required htmlFor="password-confirmation" id="password-confirmation-label">
+                                            Password Confirmation
+                                        </InputLabel>
+                                        {passwordConfirmationInput}
+                                    </FormControl>
+                                </FormGroup>
                                 <FormGroup row={true} id="submit-group" sx={{marginTop: "1em"}}>
                                     <FormControl fullWidth>
                                         <Button
@@ -110,7 +140,7 @@ function Login() {
                                             variant="contained"
                                             color="primary"
                                             type="submit"
-                                            id="submit-button">Login</Button>
+                                            id="submit-button">Create account</Button>
                                     </FormControl>
                                 </FormGroup>
                             </form>
@@ -120,9 +150,7 @@ function Login() {
                     <CardActions sx={{marginTop: "1em", justifyContent: "center"}}>
                         <Box>
                             <Typography variant="body2" color="text.secondary" align="center">
-                                <Link to="/forgot-password">Forgot password?</Link>
-                                <br />
-                                <Link to="/signup">Create an account</Link>
+                                <Link to="/login">Already have an account?</Link>
                             </Typography>
                         </Box>
                     </CardActions>
@@ -132,4 +160,4 @@ function Login() {
     )
 }
 
-export default Login
+export default Signup

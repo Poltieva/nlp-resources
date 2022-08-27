@@ -6,6 +6,8 @@ import NavBar from "./components/NavBar";
 import PersistLogin from "./components/sessions/PersistLogin";
 import Login from "./components/sessions/Login";
 import PrivateRoute from "./components/routes/PrivateRoute";
+import PublicOnlyRoute from "./components/routes/PublicOnlyRoute";
+import Signup from "./components/sessions/Signup";
 
 function App() {
   return (
@@ -14,13 +16,27 @@ function App() {
             <NavBar />
             <Routes>
                 <Route element={<PersistLogin />} >
-                    <Route exact path="/login" element={<Login />} />
                     <Route exact path="/" element={
                         <PrivateRoute>
                             <Resources />
                         </PrivateRoute>
                     } />
                     <Route path="/about" element={<About />} />
+                    <Route exact path="/login" element={
+                        <PublicOnlyRoute>
+                            <Login />
+                        </PublicOnlyRoute>
+                    } />
+                    <Route exact path="/signup" element={
+                        <PublicOnlyRoute>
+                            <Signup />
+                        </PublicOnlyRoute>
+                    } />
+                    {/*<Route exact path="/logout" element={*/}
+                    {/*    <PublicOnlyRoute>*/}
+                    {/*        <Login />*/}
+                    {/*    </PublicOnlyRoute>*/}
+                    {/*} />*/}
                 </Route>
             </Routes>
         </BrowserRouter>

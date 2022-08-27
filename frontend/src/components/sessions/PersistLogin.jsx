@@ -9,21 +9,21 @@ function PersistLogin() {
     useEffect(() => {
         function verifyRefreshToken() {
             try {
-                // dispatch(refreshAccessToken(accessToken))
-                console.log("Refreshing access token")
+                // dispatch(refreshAccessToken(refreshToken));
             } catch (error) {
-                console.log("Error refreshing access token")
-            }
-            if (!accessToken) {
-                verifyRefreshToken()
+                console.log(error);
             }
         }
-    }, [accessToken, refreshToken])
+        if (!accessToken) {
+            verifyRefreshToken();
+        }
+    }, [accessToken, refreshToken]);
 
     return (
-        <>{loading ? <p>Loading...</p> : <Outlet />}</>
+        <>
+            {loading ? <p>Loading...</p> : <Outlet />}
+        </>
     )
-
 }
 
 export default PersistLogin
