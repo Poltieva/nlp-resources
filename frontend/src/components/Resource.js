@@ -1,4 +1,5 @@
 import {Fragment} from "react";
+import handleDelete from "../axios";
 
 function Image({resource}) {
     return (
@@ -42,15 +43,25 @@ function Resource({resource}) {
     }
 
     return (
-        <div className="p-5 bg-white flex items-center mx-auto border-b
-        mb-10 border-gray-200 rounded-lg sm:flex-row flex-col">
-            <Image resource={resource} />
-            <div className="flex-grow sm:text-left text-center mt-6 sm:mt-0">
-                {Object.keys(elements).map((elem_key) =>
-                    resource[elem_key] === null ? null : elements[elem_key]
-                )}
+        <div id={`${resource.id}`} className="p-5 bg-white mx-auto border-b
+            mb-10 border-gray-200 rounded-lg">
+            <div className="flex items-center sm:flex-row flex-col mb-5">
+                <Image resource={resource} />
+                <div className="flex-grow sm:text-left text-center mt-6 sm:mt-0">
+                    {Object.keys(elements).map((elem_key) =>
+                        resource[elem_key] === null ? null : elements[elem_key]
+                    )}
+                </div>
             </div>
+        <div>
+            <a className="px-6 py-3 text-black no-underline bg-blue-200 rounded"
+               href={`${process.env.REACT_APP_API_URL}/resources/${resource.id}`}>Edit</a>
+            <button
+                onClick={(e) => handleDelete(`${process.env.REACT_APP_API_URL}/resources/${resource.id}`)}
+                rel="nofollow" className="px-6 mx-5 py-3 text-white no-underline bg-red-500 rounded"
+            >Delete</button>
         </div>
+    </div>
     )
 }
 export default Resource;

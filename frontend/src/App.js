@@ -8,6 +8,7 @@ import Login from "./components/sessions/Login";
 import PrivateRoute from "./components/routes/PrivateRoute";
 import PublicOnlyRoute from "./components/routes/PublicOnlyRoute";
 import Signup from "./components/sessions/Signup";
+import ResourceForm from './components/ResourceForm';
 
 function App() {
   return (
@@ -17,11 +18,12 @@ function App() {
             <Routes>
                 <Route element={<PersistLogin />} >
                     <Route exact path="/" element={
-                        <PrivateRoute>
-                            <Resources />
-                        </PrivateRoute>
+                        // <PrivateRoute>
+                    <Resources />
+                        // </PrivateRoute>
                     } />
                     <Route path="/about" element={<About />} />
+                    <Route exact path="/create-new-resource" element={<ResourceForm />} />
                     <Route exact path="/login" element={
                         <PublicOnlyRoute>
                             <Login />
@@ -32,11 +34,6 @@ function App() {
                             <Signup />
                         </PublicOnlyRoute>
                     } />
-                    {/*<Route exact path="/logout" element={*/}
-                    {/*    <PublicOnlyRoute>*/}
-                    {/*        <Login />*/}
-                    {/*    </PublicOnlyRoute>*/}
-                    {/*} />*/}
                 </Route>
             </Routes>
         </BrowserRouter>

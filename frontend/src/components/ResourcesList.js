@@ -16,7 +16,7 @@ class ResourcesList extends React.Component {
     // execute the code
     componentDidMount() {
         fetch(
-            process.env.REACT_APP_API_URL)
+            `${process.env.REACT_APP_API_URL}/resources`)
             .then((res) => res.json())
             .then((json) => {
                 this.setState({
