@@ -24,6 +24,7 @@ function App() {
                     } />
                     <Route path="/about" element={<About />} />
                     <Route exact path="/create-new-resource" element={<ResourceForm />} />
+                    <Route path="/update-resource/:id" element={<ResourceForm />} />
                     <Route exact path="/login" element={
                         <PublicOnlyRoute>
                             <Login />
