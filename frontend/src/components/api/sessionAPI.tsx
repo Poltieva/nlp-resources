@@ -1,12 +1,11 @@
 import axios from "./axios";
 
-const LOGIN_URL = "/oauth/token";
+const LOGIN_URL = `${process.env.REACT_APP_API_URL}/oauth/token`;
 const SIGNUP_URL = `${process.env.REACT_APP_API_URL}/users`;
 const UPDATE_PROFILE_URL = "/users";
-const LOGOUT_URL = "/oauth/revoke";
-const CURRENT_USER_URL = "/users/me";
+const LOGOUT_URL = `${process.env.REACT_APP_API_URL}/oauth/revoke`;
+const CURRENT_USER_URL = `${process.env.REACT_APP_API_URL}//users/me`;
 
-// TODO figure out why CLIENT_ID is undefined
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
 
@@ -38,6 +37,7 @@ export async function loginWithEmailAndPassword(
     email: string,
     password: string
 ) {
+    console.log(LOGIN_URL)
     const data = {
         grant_type: "password",
         email: email,
@@ -103,6 +103,7 @@ export async function logoutUserWithToken(token: string) {
 }
 
 export async function requestAccessTokenWithRefreshToken(refreshToken: string) {
+    console.log(LOGIN_URL)
     const data = {
         grant_type: "refresh_token",
         refresh_token: refreshToken,

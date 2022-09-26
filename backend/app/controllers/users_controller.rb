@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action doorkeeper_authorize!
+  before_action :doorkeeper_authorize!
   before_action :current_user
 
   def me
