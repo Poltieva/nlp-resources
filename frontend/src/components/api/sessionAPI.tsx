@@ -102,7 +102,6 @@ export async function logoutUserWithToken(token: string) {
 }
 
 export async function requestAccessTokenWithRefreshToken(refreshToken: string) {
-    console.log(LOGIN_URL)
     const data = {
         grant_type: "refresh_token",
         refresh_token: refreshToken,

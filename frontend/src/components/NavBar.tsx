@@ -7,7 +7,6 @@ import {useSelector} from "react-redux";
 import {RootState} from "../store";
 
 function NavBar() {
-    console.log(useSelector((state : RootState) => state.session.currentUser))
     const accessToken = useSelector((state : RootState) => state.session.accessToken);
     const currentUser = useSelector((state : RootState) => state.session.currentUser);
     const [togglerNav, setTogglerNav] = useState(false);

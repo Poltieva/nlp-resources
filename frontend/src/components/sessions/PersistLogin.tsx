@@ -13,7 +13,6 @@ function PersistLogin() {
     const refreshToken = useSelector((state : RootState) => state.session.refreshToken);
     const dispatch = useAppDispatch();
     function verifyRefreshToken() {
-        console.log(accessToken)
         try {
             dispatch(refreshAccessToken(refreshToken));
         } catch (error) {

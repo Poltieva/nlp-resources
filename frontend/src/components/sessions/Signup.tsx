@@ -53,7 +53,6 @@ function Signup() {
         }
         const response = await dispatch(signUpUser(payload)) as any;
 
-        console.log(response)
         if (!response.payload.errors) {
             console.log("Successful sign up")
             navigate("/");
