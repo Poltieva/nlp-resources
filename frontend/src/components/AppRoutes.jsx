@@ -8,6 +8,7 @@ import Login from "./sessions/Login";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicOnlyRoute from "./routes/PublicOnlyRoute";
 import Signup from "./sessions/Signup";
+import Logout from "./sessions/Logout";
 
 function AppRoutes() {
     return (
@@ -27,15 +28,15 @@ function AppRoutes() {
                         </PublicOnlyRoute>
                     } />
                     <Route exact path="/signup" element={
-                        // <PublicOnlyRoute>
+                        <PublicOnlyRoute>
                             <Signup />
-                        // </PublicOnlyRoute>
+                        </PublicOnlyRoute>
                     } />
-                    {/*<Route exact path="/logout" element={*/}
-                    {/*    <PublicOnlyRoute>*/}
-                    {/*        <Login />*/}
-                    {/*    </PublicOnlyRoute>*/}
-                    {/*} />*/}
+                    <Route exact path="/logout" element={
+                        <PrivateRoute>
+                            <Logout />
+                        </PrivateRoute>
+                    } />
                 </Route>
             </Routes>
         </BrowserRouter>
