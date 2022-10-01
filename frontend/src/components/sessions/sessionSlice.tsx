@@ -6,6 +6,7 @@ export interface User {
     id?: string;
     email?: string;
     createdAt?: string;
+    username?: string;
 }
 
 export interface UserSignUpData {
@@ -43,7 +44,8 @@ const initialState: AuthState = {
     currentUser: {
         id: undefined,
         email: undefined,
-        createdAt: undefined
+        createdAt: undefined,
+        username: undefined
     },
     loading: true,
     error: false,
@@ -84,7 +86,8 @@ export const updateProfile = createAsyncThunk(
             payload.currentPassword,
             payload.token,
             payload?.email,
-            payload?.password
+            payload?.password,
+            payload?.username
         );
         if (response.errors) {
             // The value we return becomes the `rejected` action payload
@@ -193,6 +196,7 @@ export const sessionSlice = createSlice({
                     id: action.payload.id,
                     email: action.payload.email,
                     createdAt: action.payload.created_at,
+                    username: action.payload.username
                 };
                 storeRefreshToken(action.payload.refresh_token);
 
@@ -219,6 +223,7 @@ export const sessionSlice = createSlice({
                     id: action.payload.id,
                     email: action.payload.email,
                     createdAt: action.payload.created_at,
+                    username: action.payload.username
                 };
                 storeRefreshToken(action.payload.refresh_token);
 
@@ -243,6 +248,7 @@ export const sessionSlice = createSlice({
                     id: action.payload.id,
                     email: action.payload.email,
                     createdAt: action.payload.created_at,
+                    username: action.payload.username
                 };
                 storeRefreshToken(action.payload.refresh_token);
 
@@ -264,6 +270,7 @@ export const sessionSlice = createSlice({
                     id: undefined,
                     email: undefined,
                     createdAt: undefined,
+                    username: undefined
                 };
                 state.accessToken = undefined;
                 state.refreshToken = undefined;
@@ -294,6 +301,7 @@ export const sessionSlice = createSlice({
                     id: action.payload.id,
                     email: action.payload.email,
                     createdAt: action.payload.created_at,
+                    username: action.payload.username
                 };
                 storeRefreshToken(action.payload.refresh_token);
 

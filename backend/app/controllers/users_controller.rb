@@ -6,7 +6,8 @@ class UsersController < ApplicationController
     if @current_user
       render json: {
         id: @current_user.id,
-        email: @current_user.email
+        email: @current_user.email,
+        username: @current_user.username
       }, status: :ok
     else
       render json: {error: 'Unauthorized'}, status: :unauthorized

@@ -27,9 +27,9 @@ function AppRoutes() {
                         </PublicOnlyRoute>
                     } />
                     <Route exact path="/signup" element={
-                        <PublicOnlyRoute>
+                        // <PublicOnlyRoute>
                             <Signup />
-                        </PublicOnlyRoute>
+                        // </PublicOnlyRoute>
                     } />
                     {/*<Route exact path="/logout" element={*/}
                     {/*    <PublicOnlyRoute>*/}

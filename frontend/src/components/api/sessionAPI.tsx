@@ -4,7 +4,7 @@ const LOGIN_URL = `${process.env.REACT_APP_API_URL}/oauth/token`;
 const SIGNUP_URL = `${process.env.REACT_APP_API_URL}/users`;
 const UPDATE_PROFILE_URL = "/users";
 const LOGOUT_URL = `${process.env.REACT_APP_API_URL}/oauth/revoke`;
-const CURRENT_USER_URL = `${process.env.REACT_APP_API_URL}//users/me`;
+const CURRENT_USER_URL = `${process.env.REACT_APP_API_URL}/users/me`;
 
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
@@ -35,7 +35,6 @@ export async function loginWithEmailAndPassword(
     email: string,
     password: string
 ) {
-    console.log(LOGIN_URL)
     const data = {
         grant_type: "password",
         email: email,
@@ -58,12 +57,14 @@ export async function updateUserProfile(
     currentPassword: string,
     token: string | undefined,
     email?: string,
-    password?: string
+    password?: string,
+    username?: string
 ) {
     const data = {
         current_password: currentPassword,
         email: email,
         password: password,
+        username: username,
         client_id: CLIENT_ID,
         client_secret: CLIENT_SECRET,
     };
