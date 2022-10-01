@@ -199,6 +199,8 @@ export const sessionSlice = createSlice({
                 state.loading = false;
                 state.error = false;
                 state.errorMessages = [];
+
+                console.log(state)
             })
             .addCase(signUpUser.rejected, (state, action: any) => {
                 state.loading = false;
