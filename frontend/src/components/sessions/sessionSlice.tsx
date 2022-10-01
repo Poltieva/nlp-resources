@@ -8,6 +8,12 @@ export interface User {
     createdAt?: string;
 }
 
+export interface UserSignUpData {
+    email: string;
+    password: string;
+    username: string;
+}
+
 export interface UserLoginData {
     email: string;
     password: string;
@@ -18,6 +24,7 @@ export interface UserUpdateData {
     token: string | undefined;
     email?: string;
     password?: string;
+    username?: string;
 }
 
 interface AuthState {
@@ -54,10 +61,11 @@ const initialState: AuthState = {
 // typically used to make async requests.
 export const signUpUser = createAsyncThunk(
     "session/signUpUser",
-    async (payload: UserLoginData, { rejectWithValue }) => {
+    async (payload: UserSignUpData, { rejectWithValue }) => {
         const response = await createUserWithEmailAndPassword(
             payload.email,
-            payload.password
+            payload.password,
+            payload.username
         );
         if (response.errors) {
             // The value we return becomes the `rejected` action payload

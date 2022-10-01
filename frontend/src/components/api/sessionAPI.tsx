@@ -11,24 +11,22 @@ const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
 
 export async function createUserWithEmailAndPassword(
     email: string,
-    password: string
+    password: string,
+    username: string
 ) {
     const data = {
         email: email,
         password: password,
+        username: username,
         client_id: CLIENT_ID,
     };
 
     return axios
         .post(SIGNUP_URL, data)
         .then((response: any) => {
-            console.log('==========')
-            console.log(data)
             return response.data;
         })
         .catch((error: any) => {
-            console.log('==========')
-            console.log(data)
             return error.response.data;
         });
 }

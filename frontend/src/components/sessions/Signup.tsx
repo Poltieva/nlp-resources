@@ -2,7 +2,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Alert, Box, Button, Card, CardActions, CardContent, Container, Divider, FormControl, FormGroup, FormHelperText, IconButton, Input, InputAdornment, InputLabel, OutlinedInput, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {RootState, store} from "../../store";
 import { resetErrorState, signUpUser } from "./sessionSlice";
 
@@ -11,6 +11,7 @@ type AppDispatch = typeof store.dispatch
 const useAppDispatch = () => useDispatch<AppDispatch>()
 function Signup() {
     const emailRef = useRef<HTMLInputElement>();
+    const userNameRef = useRef<HTMLInputElement>();
     const passwordRef = useRef<HTMLInputElement>();
     const passwordConfirmationRef = useRef<HTMLInputElement>();
     const errorMessages = useSelector((state: RootState) => state.session.errorMessages);
@@ -36,6 +37,8 @@ function Signup() {
             || emailRef.current.value === ""
             || passwordRef?.current === undefined
             || passwordRef.current.value === ""
+            || userNameRef?.current === undefined
+            || userNameRef.current.value === ""
             || passwordConfirmationRef?.current === undefined
             || passwordConfirmationRef.current.value === "") {
             return setErrors(["Please fill out all fields"])
@@ -45,15 +48,15 @@ function Signup() {
         }
         const payload = {
             email: emailRef.current.value,
-            password: passwordRef.current.value
+            password: passwordRef.current.value,
+            username: userNameRef.current.value
         }
         const response = await dispatch(signUpUser(payload)) as any;
 
-        console.log(response);
-        if (errorMessages.length > 0) {
+        console.log(response)
+        if (!response.payload.errors) {
+            console.log("Successful sign up")
             navigate("/");
-        } else {
-            return setErrors(errorMessages);
         }
     }
 
@@ -107,6 +110,12 @@ function Signup() {
                                         <FormHelperText id="email-helper-text">We&apos;ll never share your email.</FormHelperText>
                                     </FormControl>
                                 </FormGroup>
+                                <FormGroup row={true} id="username-group" sx={{marginTop: "1em"}}>
+                                    <FormControl fullWidth>
+                                        <InputLabel required htmlFor="username" id="username-label">Username</InputLabel>
+                                        <Input id="username" type="text" inputRef={userNameRef}/>
+                                    </FormControl>
+                                </FormGroup>
                                 <FormGroup row={true} id="password-group" sx={{marginTop: "1em"}}>
                                     <FormControl fullWidth>
                                         <InputLabel required htmlFor="password" id="password-label">Password</InputLabel>
@@ -145,4 +154,4 @@ function Signup() {
     )
 }
 
-export default Signup
+export default Signup;
