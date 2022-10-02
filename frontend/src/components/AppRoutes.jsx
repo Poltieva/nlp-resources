@@ -9,6 +9,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import PublicOnlyRoute from "./routes/PublicOnlyRoute";
 import Signup from "./sessions/Signup";
 import Logout from "./sessions/Logout";
+import ResourceForm from "./ResourceForm";
 
 function AppRoutes() {
     return (
@@ -35,6 +36,11 @@ function AppRoutes() {
                     <Route exact path="/logout" element={
                         <PrivateRoute>
                             <Logout />
+                        </PrivateRoute>
+                    } />
+                    <Route exact path={"update-resource/:id"} element={
+                        <PrivateRoute>
+                            <ResourceForm />
                         </PrivateRoute>
                     } />
                 </Route>
