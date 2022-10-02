@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   scope :api do
     scope :v1 do
+      get "/users/me", to: "users#me"
       use_doorkeeper do
         skip_controllers :authorizations, :applications, :authorized_applications
       end

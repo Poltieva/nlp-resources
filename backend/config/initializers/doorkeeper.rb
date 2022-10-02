@@ -1,15 +1,13 @@
 # frozen_string_literal: true
 
 Doorkeeper.configure do
-  # Change the ORM that doorkeeper will use (requires ORM extensions installed).
-  # Check the list of supported ORMs here: https://github.com/doorkeeper-gem/doorkeeper#orms
   orm :active_record
 
   resource_owner_from_credentials do
     User.authenticate(params[:email], params[:password])
   end
   # enable password grant
-  grant_flows %w[password]
+  grant_flows %w[password refresh_token]
 
   # This block will be called to check whether the resource owner is authenticated or not.
   # resource_owner_authenticator do
@@ -85,7 +83,7 @@ Doorkeeper.configure do
   # want to use API mode that will skip all the views management and change the way how
   # Doorkeeper responds to a requests.
   #
-  # api_only
+  api_only
 
   # Enforce token request content type to application/x-www-form-urlencoded.
   # It is not enabled by default to not break prior versions of the gem.
