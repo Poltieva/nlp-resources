@@ -1,6 +1,5 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {produce} from "immer";
 
 import {
     Alert, Button,
@@ -19,14 +18,14 @@ function ResourceForm() {
     const [loading, setLoading] = useState(true);
     const [errors, setErrors] = useState([]);
     const [name, setName] = useState('');
-    const [descr, setDescr] = useState('');
+    const [description, setDescription] = useState('');
     const [url, setUrl] = useState('');
     const [author, setAuthor] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [keywords, setKeywords] = useState([]);
     const [medium, setMedium] = useState('');
-    const [newKeyword, setNewKeyword] = useState("");
-    let { resourceId } = useParams()
+    let resourceId = useParams().id
+    const arrOfVars = ['name', 'description', 'url', 'author', 'imageUrl', 'medium', 'keywords']
 
     useEffect(() => {
         axios
@@ -34,14 +33,9 @@ function ResourceForm() {
             .then((response) => {
                 console.log(response)
                 if (response.status === 200) {
-                    setName(response.data.description)
-                    setDescr(response.data.url)
-                    setUrl(response.data.url)
-                    setAuthor(response.data.author)
-                    setImageUrl(response.data.image_url)
-                    // setKeywords(response.data.keywords)
-                    setMedium(response.data.medium)
-
+                    arrOfVars.forEach((value) => {
+                        eval(`set${value[0].toUpperCase() + value.substr(1)}(response.data.${value.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)})`)
+                    })
                     setLoading(false)
                 } else {
                     setErrors([])
@@ -55,14 +49,15 @@ function ResourceForm() {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        // setErrors([])
-        // if (false) {
-        //     return setErrors(["Please fill out all fields"])
-        // }
-        //
-        // const payload = {
-        //
-        // }
+        setErrors([])
+
+        let payload = {resource: {}};
+        arrOfVars.forEach((i) => {
+            payload.resource[i.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)] = eval(i)
+        })
+        console.log(payload)
+        // console.log(payload)
+
         // const response = await axios
         //     .patch(UPDATE_URL, payload)
         //     .then((response) => {
@@ -86,6 +81,7 @@ function ResourceForm() {
                         <Container maxWidth="sm">
                             {errors.length > 0 ?
                                 <Alert severity="error" aria-live="assertive">
+                                    <p>{errors}</p>
                                     {errors.map((error, index) => {
                                         return <p key={`alert-${index}`}>
                                             {error}
@@ -105,14 +101,14 @@ function ResourceForm() {
                                 <FormGroup row={true} id="description-group" sx={{marginTop: "1em"}}>
                                     <FormControl fullWidth>
                                         <InputLabel required htmlFor="description" id="description-label">Description</InputLabel>
-                                        <Input id="description" type="text" value={descr}
-                                               onChange={(e) => setDescr(e.target.value)}
+                                        <Input id="description" type="text" value={description}
+                                               onChange={(e) => setDescription(e.target.value)}
                                         />
                                     </FormControl>
                                 </FormGroup>
                                 <FormGroup row={true} id="url-group" sx={{marginTop: "1em"}}>
                                     <FormControl fullWidth>
-                                        <InputLabel required htmlFor="url" id="url-label">Description</InputLabel>
+                                        <InputLabel required htmlFor="url" id="url-label">URL</InputLabel>
                                         <Input id="url" type="text" value={url}
                                                onChange={(e) => setUrl(e.target.value)}
                                         />
