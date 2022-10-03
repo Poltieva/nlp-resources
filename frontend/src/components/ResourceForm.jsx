@@ -59,7 +59,7 @@ function ResourceForm() {
         // console.log(payload)
 
         // const response = await axios
-        //     .patch(UPDATE_URL, payload)
+        //     .put(UPDATE_URL, payload)
         //     .then((response) => {
         //         return response.data;
         //     })
