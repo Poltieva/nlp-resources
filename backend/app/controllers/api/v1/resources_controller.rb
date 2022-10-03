@@ -2,6 +2,7 @@
 
 class Api::V1::ResourcesController < ApplicationController
   skip_before_action :doorkeeper_authorize! #, only: %i[index]
+  before_action :find_resource, only: %i[update]
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   def index
@@ -14,7 +15,13 @@ class Api::V1::ResourcesController < ApplicationController
 
   def create; end
 
-  def update; end
+  def update
+    if @resource.update(resource_params)
+      render json: {notice: "Resource was successfully updated"}, status: :ok
+    else
+      render json: {errors: @resource.errors.full_messages}, status: :unprocessable_entity
+    end
+  end
 
   def destroy; end
 
@@ -25,5 +32,9 @@ class Api::V1::ResourcesController < ApplicationController
 
   def resource_params
     params.require('resource').permit('name', 'description', 'url', 'author', 'imageUrl', 'medium', 'keywords')
+  end
+
+  def find_resource
+    @resource = Resource.find(params[:id])
   end
 end

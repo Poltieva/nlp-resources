@@ -11,10 +11,11 @@ import {
     Input,
     InputLabel,
 } from "@mui/material";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
-const UPDATE_URL = `${process.env.REACT_APP_API_URL}/users`;
+const UPDATE_URL = `${process.env.REACT_APP_API_URL}/resources`;
 function ResourceForm() {
+    const navigate = useNavigate()
     const [loading, setLoading] = useState(true);
     const [errors, setErrors] = useState([]);
     const [name, setName] = useState('');
@@ -24,7 +25,7 @@ function ResourceForm() {
     const [imageUrl, setImageUrl] = useState('');
     const [keywords, setKeywords] = useState([]);
     const [medium, setMedium] = useState('');
-    let resourceId = useParams().id
+    const resourceId = useParams().id
     const arrOfVars = ['name', 'description', 'url', 'author', 'imageUrl', 'medium', 'keywords']
 
     useEffect(() => {
@@ -55,23 +56,17 @@ function ResourceForm() {
         arrOfVars.forEach((i) => {
             payload.resource[i.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)] = eval(i)
         })
-        console.log(payload)
-        // console.log(payload)
-
-        // const response = await axios
-        //     .put(UPDATE_URL, payload)
-        //     .then((response) => {
-        //         return response.data;
-        //     })
-        //     .catch((error) => {
-        //         return error.response.data;
-        //     });
-        //
-        // console.log(response)
-        // if (!response.payload.errors) {
-        //     console.log('successful update')
-        //     // navigate("/");
-        // }
+        axios
+            .put(`${UPDATE_URL}/${resourceId}`, payload)
+            .then((response) => {
+                console.log(response)
+                if (response.status === 200) {
+                    navigate('/')
+                }
+            })
+            .catch((error) => {
+                setErrors(error.response.data.errors)
+            });
     }
     return (
         <section className="container px-10 mx-auto">
@@ -81,7 +76,6 @@ function ResourceForm() {
                         <Container maxWidth="sm">
                             {errors.length > 0 ?
                                 <Alert severity="error" aria-live="assertive">
-                                    <p>{errors}</p>
                                     {errors.map((error, index) => {
                                         return <p key={`alert-${index}`}>
                                             {error}
@@ -92,7 +86,7 @@ function ResourceForm() {
                             <form onSubmit={handleSubmit}>
                                 <FormGroup row={true} id="name-group" sx={{marginTop: "1em"}}>
                                     <FormControl fullWidth>
-                                        <InputLabel required htmlFor="name" id="name-label">Resource Name</InputLabel>
+                                        <InputLabel htmlFor="name" id="name-label">Resource Name</InputLabel>
                                         <Input id="name" type="text" value={name}
                                                onChange={(e) => setName(e.target.value)}
                                         />
@@ -100,7 +94,7 @@ function ResourceForm() {
                                 </FormGroup>
                                 <FormGroup row={true} id="description-group" sx={{marginTop: "1em"}}>
                                     <FormControl fullWidth>
-                                        <InputLabel required htmlFor="description" id="description-label">Description</InputLabel>
+                                        <InputLabel htmlFor="description" id="description-label">Description</InputLabel>
                                         <Input id="description" type="text" value={description}
                                                onChange={(e) => setDescription(e.target.value)}
                                         />
@@ -108,7 +102,7 @@ function ResourceForm() {
                                 </FormGroup>
                                 <FormGroup row={true} id="url-group" sx={{marginTop: "1em"}}>
                                     <FormControl fullWidth>
-                                        <InputLabel required htmlFor="url" id="url-label">URL</InputLabel>
+                                        <InputLabel htmlFor="url" id="url-label">URL</InputLabel>
                                         <Input id="url" type="text" value={url}
                                                onChange={(e) => setUrl(e.target.value)}
                                         />
@@ -116,7 +110,7 @@ function ResourceForm() {
                                 </FormGroup>
                                 <FormGroup row={true} id="author-group" sx={{marginTop: "1em"}}>
                                     <FormControl fullWidth>
-                                        <InputLabel required htmlFor="author" id="author-label">Author</InputLabel>
+                                        <InputLabel htmlFor="author" id="author-label">Author</InputLabel>
                                         <Input id="author" type="text" value={author}
                                                onChange={(e) => setAuthor(e.target.value)}
                                         />
@@ -124,7 +118,7 @@ function ResourceForm() {
                                 </FormGroup>
                                 <FormGroup row={true} id="imageUrl-group" sx={{marginTop: "1em"}}>
                                     <FormControl fullWidth>
-                                        <InputLabel required htmlFor="imageUrl" id="imageUrl-label">Image url</InputLabel>
+                                        <InputLabel htmlFor="imageUrl" id="imageUrl-label">Image url</InputLabel>
                                         <Input id="imageUrl" type="text" value={imageUrl}
                                                onChange={(e) => setImageUrl(e.target.value)}
                                         />
@@ -132,7 +126,7 @@ function ResourceForm() {
                                 </FormGroup>
                                 <FormGroup row={true} id="medium-group" sx={{marginTop: "1em"}}>
                                     <FormControl fullWidth>
-                                        <InputLabel required htmlFor="medium" id="medium-label">Medium</InputLabel>
+                                        <InputLabel htmlFor="medium" id="medium-label">Medium</InputLabel>
                                         <Input id="medium" type="text" value={medium}
                                                onChange={(e) => setMedium(e.target.value)}
                                         />
