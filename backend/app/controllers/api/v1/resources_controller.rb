@@ -22,4 +22,8 @@ class Api::V1::ResourcesController < ApplicationController
   def not_found(exception)
     render json: {errors: exception.full_message}, status: :not_found
   end
+
+  def resource_params
+    params.require('resource').permit('name', 'description', 'url', 'author', 'imageUrl', 'medium', 'keywords')
+  end
 end
