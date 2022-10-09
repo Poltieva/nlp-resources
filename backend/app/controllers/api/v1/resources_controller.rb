@@ -13,7 +13,14 @@ class Api::V1::ResourcesController < ApplicationController
     render json: Resource.find(params[:id])
   end
 
-  def create; end
+  def create
+    @resource = Resource.create(resource_params)
+    if @resource.save
+      render json: {message: "Successfully created a resource ##{@resource.id}"}, status: :created
+    else
+      render json: {errors: @resource.errors.full_messages}, status: :unprocessable_entity
+    end
+  end
 
   def update
     if @resource.update(resource_params)
@@ -31,7 +38,7 @@ class Api::V1::ResourcesController < ApplicationController
   end
 
   def resource_params
-    params.require('resource').permit('name', 'description', 'url', 'author', 'imageUrl', 'medium', 'keywords')
+    params.require(:resource).permit(:name, :description, :url, :author, :image_url, :medium, keywords: [])
   end
 
   def find_resource

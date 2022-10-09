@@ -15,7 +15,6 @@ function NavBar() {
     };
     let sessionLink;
     if (accessToken) {
-        console.log(accessToken)
         sessionLink = <>
             <NavLink to="/logout" className="nav-link" onClick={clickHandler}>
                 Logout

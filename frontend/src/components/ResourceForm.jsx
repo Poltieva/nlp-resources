@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import {useNavigate, useParams} from "react-router-dom";
 
-const UPDATE_URL = `${process.env.REACT_APP_API_URL}/resources`;
+const RESOURCES_URL = `${process.env.REACT_APP_API_URL}/resources`;
 function ResourceForm() {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(true);
@@ -26,26 +26,32 @@ function ResourceForm() {
     const [keywords, setKeywords] = useState([]);
     const [medium, setMedium] = useState('');
     const resourceId = useParams().id
+    const path = window.location.pathname
     const arrOfVars = ['name', 'description', 'url', 'author', 'imageUrl', 'medium', 'keywords']
 
     useEffect(() => {
-        axios
-            .get(`${process.env.REACT_APP_API_URL}/resources/${resourceId}`)
-            .then((response) => {
-                console.log(response)
-                if (response.status === 200) {
-                    arrOfVars.forEach((value) => {
-                        eval(`set${value[0].toUpperCase() + value.substr(1)}(response.data.${value.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)})`)
-                    })
-                    setLoading(false)
-                } else {
+        if (path === "/create-new-resource") {
+            setLoading(false)
+        } else {
+            axios
+                .get(`${RESOURCES_URL}/${resourceId}`)
+                .then((response) => {
+                    console.log(response)
+                    if (response.status === 200) {
+                        arrOfVars.forEach((value) => {
+                            eval(`set${value[0].toUpperCase() + value.substr(1)}(response.data.${value.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)})`)
+                        })
+                        setLoading(false)
+                    } else {
+                        setErrors([])
+                        setErrors(response.data.errors)
+                    }
+                })
+                .catch((e) => {
                     setErrors([])
-                    setErrors(response.data.errors)
-                }
-            })
-            .catch((e) => {
-                setErrors([])
-                setErrors(e.response.data) });
+                    setErrors(e.response.data)
+                });
+        }
     }, [])
 
     async function handleSubmit(event) {
@@ -53,20 +59,55 @@ function ResourceForm() {
         setErrors([])
 
         let payload = {resource: {}};
-        arrOfVars.forEach((i) => {
-            payload.resource[i.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)] = eval(i)
-        })
-        axios
-            .put(`${UPDATE_URL}/${resourceId}`, payload)
-            .then((response) => {
-                console.log(response)
-                if (response.status === 200) {
-                    navigate('/')
+
+        if (path === "/create-new-resource") {
+            arrOfVars.forEach((i) => {
+                if (eval(i).length > 0) {
+                    payload.resource[i.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)] = eval(i)
                 }
             })
-            .catch((error) => {
-                setErrors(error.response.data.errors)
-            });
+            axios
+                .post(RESOURCES_URL, payload)
+                .then((response) => {
+                    if (response.status === 201) {
+                        navigate('/')
+                    }
+                })
+                .catch((error) => {
+                    setErrors(error.response.data.errors)
+                });
+        } else {
+            arrOfVars.forEach((i) => {
+                payload.resource[i.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)] = eval(i)
+            })
+            axios
+                .put(`${RESOURCES_URL}/${resourceId}`, payload)
+                .then((response) => {
+                    if (response.status === 200) {
+                        navigate('/')
+                    }
+                })
+                .catch((error) => {
+                    setErrors(error.response.data.errors)
+                });
+        }
+    }
+    let keywordsDiv;
+    if (keywords.length > 0) {
+        keywordsDiv = <FormGroup row={true} id="keywords-group" sx={{marginTop: "1em"}}>
+            {
+                keywords.map((keyword, index) => {
+                    return (
+                        <div key={index}>
+                            <div key={index} className="inline-block mr-2 mb-1 rounded-full bg-red-300 py-1 px-3">
+                                <p>{keyword}</p>
+                            </div>
+                        </div>
+                    )
+                })
+            }
+            <p>Uneditable for now :(</p>
+        </FormGroup>
     }
     return (
         <section className="container px-10 mx-auto">
@@ -132,20 +173,7 @@ function ResourceForm() {
                                         />
                                     </FormControl>
                                 </FormGroup>
-                                <FormGroup row={true} id="keywords-group" sx={{marginTop: "1em"}}>
-                                    {
-                                        keywords.map((keyword, index) => {
-                                            return (
-                                                <div key={index}>
-                                                    <div key={index} className="inline-block mr-2 mb-1 rounded-full bg-red-300 py-1 px-3">
-                                                        <p>{keyword}</p>
-                                                    </div>
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                    <p>Uneditable for now :(</p>
-                                </FormGroup>
+                                {keywordsDiv}
                                 <FormGroup row={true} id="submit-group" sx={{marginTop: "1em"}}>
                                     <FormControl fullWidth>
                                         <Button
@@ -153,7 +181,7 @@ function ResourceForm() {
                                             variant="contained"
                                             color="primary"
                                             type="submit"
-                                            id="submit-button">Update resource</Button>
+                                            id="submit-button">{path === "/create-new-resource" ? "Create" : "Update"} this resource</Button>
                                     </FormControl>
                                 </FormGroup>
                             </form>

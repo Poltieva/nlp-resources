@@ -38,7 +38,12 @@ function AppRoutes() {
                             <Logout />
                         </PrivateRoute>
                     } />
-                    <Route exact path={"update-resource/:id"} element={
+                    <Route exact path={"/update-resource/:id"} element={
+                        <PrivateRoute>
+                            <ResourceForm />
+                        </PrivateRoute>
+                    } />
+                    <Route exact path={"/create-new-resource"} element={
                         <PrivateRoute>
                             <ResourceForm />
                         </PrivateRoute>
