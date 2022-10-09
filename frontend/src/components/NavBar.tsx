@@ -21,6 +21,12 @@ function NavBar() {
             </NavLink>
             <NavLink to={"/profile"} className="nav-link" onClick={clickHandler} >{currentUser?.username}</NavLink>
         </>
+    } else {
+        sessionLink = <>
+            <NavLink to="/login" className="nav-link">
+                Login
+            </NavLink>
+        </>
     }
     return (
         <nav className="h-auto md:h-24 p2 bg-blue-200 mx-auto flex

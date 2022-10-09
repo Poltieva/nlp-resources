@@ -17,11 +17,7 @@ function AppRoutes() {
             <NavBar />
             <Routes>
                 <Route element={<PersistLogin />} >
-                    <Route exact path="/" element={
-                        <PrivateRoute>
-                            <Resources />
-                        </PrivateRoute>
-                    } />
+                    <Route exact path="/" element={<Resources />} />
                     <Route path="/about" element={<About />} />
                     <Route exact path="/login" element={
                         <PublicOnlyRoute>
