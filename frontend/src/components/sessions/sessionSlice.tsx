@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createUserWithEmailAndPassword, getCurrentUser, loginWithEmailAndPassword, logoutUserWithToken, requestAccessTokenWithRefreshToken, updateUserProfile } from "../api/sessionAPI";
+import {storeRefreshToken, removeRefreshToken, getRefreshToken, storeAccessToken, removeAccessToken, getAccessToken} from './storeTokens'
 
 
 export interface User {
@@ -198,6 +199,7 @@ export const sessionSlice = createSlice({
                     username: action.payload.username
                 };
                 storeRefreshToken(action.payload.refresh_token);
+                storeAccessToken(action.payload.access_token);
 
                 state.loading = false;
                 state.error = false;
@@ -225,6 +227,7 @@ export const sessionSlice = createSlice({
                     username: action.payload.username
                 };
                 storeRefreshToken(action.payload.refresh_token);
+                storeAccessToken(action.payload.access_token);
 
                 state.loading = false;
                 state.error = false;
@@ -250,6 +253,7 @@ export const sessionSlice = createSlice({
                     username: action.payload.username
                 };
                 storeRefreshToken(action.payload.refresh_token);
+                storeAccessToken(action.payload.access_token);
 
                 state.loading = false;
                 state.error = false;
@@ -276,6 +280,7 @@ export const sessionSlice = createSlice({
                 state.expiresIn = undefined;
                 state.tokenType = undefined;
                 removeRefreshToken();
+                removeAccessToken();
 
                 state.loading = false;
                 state.error = false;
@@ -327,15 +332,3 @@ export const { resetErrorState } = sessionSlice.actions;
 // Here's an example of conditionally dispatching actions based on current state.
 
 export default sessionSlice.reducer;
-
-function storeRefreshToken(token: string) {
-    localStorage.setItem("refreshToken", token);
-}
-
-function removeRefreshToken() {
-    localStorage.removeItem("refreshToken");
-}
-
-function getRefreshToken() {
-    return localStorage.getItem("refreshToken");
-}

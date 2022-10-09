@@ -1,6 +1,7 @@
 import {Fragment} from "react";
 import handleDelete from "../axios";
 import {useSelector} from "react-redux";
+import {getAccessToken} from "./sessions/storeTokens";
 
 function Image({resource}) {
     return (
@@ -14,7 +15,7 @@ function Image({resource}) {
 }
 
 function Resource({resource}) {
-    const accessToken = useSelector((state ) => state.session.accessToken);
+    const accessToken = getAccessToken();
     const elements = {
         name: <div key="name">
             <a href={`${process.env.REACT_APP_API_URL}/resources/${resource.id}`}

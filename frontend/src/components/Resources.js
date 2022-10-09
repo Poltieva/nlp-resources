@@ -1,8 +1,8 @@
 import ResourcesList from "./ResourcesList";
-import {useSelector} from "react-redux";
+import {getAccessToken} from "./sessions/storeTokens";
 
 function Resources() {
-    const accessToken = useSelector((state ) => state.session.accessToken);
+    const accessToken = getAccessToken();
     return (
         <div className="container px-10 mx-auto">
             {accessToken ?

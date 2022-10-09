@@ -1,5 +1,6 @@
 import React from 'react';
 import Resource from './Resource';
+import instance from './api/axios';
 
 class ResourcesList extends React.Component {
     // Constructor
@@ -15,12 +16,11 @@ class ResourcesList extends React.Component {
     // ComponentDidMount is used to
     // execute the code
     componentDidMount() {
-        fetch(
-            `${process.env.REACT_APP_API_URL}/resources`)
-            .then((res) => res.json())
-            .then((json) => {
+        instance.get(
+            `/resources`)
+            .then((response) => {
                 this.setState({
-                    items: json,
+                    items: response.data,
                     DataisLoaded: true
                 });
             })

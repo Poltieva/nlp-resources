@@ -5,9 +5,10 @@ import {FaBars} from "react-icons/fa"
 import {AiOutlineClose} from "react-icons/ai"
 import {useSelector} from "react-redux";
 import {RootState} from "../store";
+import {getAccessToken} from "./sessions/storeTokens";
 
 function NavBar() {
-    const accessToken = useSelector((state : RootState) => state.session.accessToken);
+    const accessToken = getAccessToken();
     const currentUser = useSelector((state : RootState) => state.session.currentUser);
     const [togglerNav, setTogglerNav] = useState(false);
     const clickHandler = () => {

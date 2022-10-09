@@ -6,6 +6,7 @@ class Api::V1::ResourcesController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   def index
+    logger.info request.headers['Authorization']
     render json: Resource.all, except: [:created_at, :updated_at]
   end
 
