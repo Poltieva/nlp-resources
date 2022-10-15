@@ -4,10 +4,10 @@ import {Route, Routes} from 'react-router-dom';
 import About from './About';
 import NavBar from "./NavBar";
 // import PersistLogin from "./sessions/PersistLogin";
-import Login from "./sessions/Login";
+import Login from "./login.component";
 // import PrivateRoute from "./routes/PrivateRoute";
 // import PublicOnlyRoute from "./routes/PublicOnlyRoute";
-import Signup from "./sessions/Signup";
+import Register from "./register.component";
 import Logout from "./sessions/Logout";
 import ResourceForm from "./ResourceForm";
 import Profile from "./profile.component";
@@ -28,7 +28,7 @@ function AppRoutes(currentUser) {
                     } />
                     <Route exact path="/signup" element={
                         // <PublicOnlyRoute>
-                            <Signup />
+                            <Register />
                         // </PublicOnlyRoute>
                     } />
                     <Route exact path="/logout" element={
