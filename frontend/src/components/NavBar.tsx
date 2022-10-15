@@ -3,19 +3,19 @@ import {FcHome} from "react-icons/fc"
 import {useState} from "react";
 import {FaBars} from "react-icons/fa"
 import {AiOutlineClose} from "react-icons/ai"
-import {useSelector} from "react-redux";
-import {RootState} from "../store";
-import {getAccessToken} from "./sessions/storeTokens";
+// import {useSelector} from "react-redux";
+// import {RootState} from "../store";
+// import {getAccessToken} from "./sessions/storeTokens";
 
-function NavBar() {
-    const accessToken = getAccessToken();
-    const currentUser = useSelector((state : RootState) => state.session.currentUser);
+function NavBar(currentUser: any) {
+    // const accessToken = getAccessToken();
+    // const currentUser = useSelector((state : RootState) => state.session.currentUser);
     const [togglerNav, setTogglerNav] = useState(false);
     const clickHandler = () => {
         setTogglerNav(!togglerNav);
     };
     let sessionLink;
-    if (accessToken) {
+    if (currentUser) {
         sessionLink = <>
             <NavLink to="/logout" className="nav-link" onClick={clickHandler}>
                 Logout

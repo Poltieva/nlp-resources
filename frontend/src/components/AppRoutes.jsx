@@ -1,52 +1,54 @@
 import Resources from './Resources';
 import React from 'react';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import About from './About';
 import NavBar from "./NavBar";
-import PersistLogin from "./sessions/PersistLogin";
+// import PersistLogin from "./sessions/PersistLogin";
 import Login from "./sessions/Login";
-import PrivateRoute from "./routes/PrivateRoute";
-import PublicOnlyRoute from "./routes/PublicOnlyRoute";
+// import PrivateRoute from "./routes/PrivateRoute";
+// import PublicOnlyRoute from "./routes/PublicOnlyRoute";
 import Signup from "./sessions/Signup";
 import Logout from "./sessions/Logout";
 import ResourceForm from "./ResourceForm";
+import Profile from "./profile.component";
 
-function AppRoutes() {
+function AppRoutes(currentUser) {
     return (
-        <BrowserRouter>
-            <NavBar />
+        <>
+            <NavBar currentUser={currentUser} />
             <Routes>
-                <Route element={<PersistLogin />} >
+                {/*<Route element={<PersistLogin />} >*/}
                     <Route exact path="/" element={<Resources />} />
                     <Route path="/about" element={<About />} />
+                    <Route exact path="/profile" element={<Profile />} />
                     <Route exact path="/login" element={
-                        <PublicOnlyRoute>
+                        // <PublicOnlyRoute>
                             <Login />
-                        </PublicOnlyRoute>
+                        // </PublicOnlyRoute>
                     } />
                     <Route exact path="/signup" element={
-                        <PublicOnlyRoute>
+                        // <PublicOnlyRoute>
                             <Signup />
-                        </PublicOnlyRoute>
+                        // </PublicOnlyRoute>
                     } />
                     <Route exact path="/logout" element={
-                        <PrivateRoute>
+                        // <PrivateRoute>
                             <Logout />
-                        </PrivateRoute>
+                        // </PrivateRoute>
                     } />
                     <Route exact path={"/update-resource/:id"} element={
-                        <PrivateRoute>
+                        // <PrivateRoute>
                             <ResourceForm />
-                        </PrivateRoute>
+                        // </PrivateRoute>
                     } />
                     <Route exact path={"/create-new-resource"} element={
-                        <PrivateRoute>
+                        // <PrivateRoute>
                             <ResourceForm />
-                        </PrivateRoute>
+                        // </PrivateRoute>
                     } />
-                </Route>
+                {/*</Route>*/}
             </Routes>
-        </BrowserRouter>
+        </>
     );
 }
 
