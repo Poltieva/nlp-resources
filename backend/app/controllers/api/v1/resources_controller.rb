@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::ResourcesController < ApplicationController
-  skip_before_action :doorkeeper_authorize! #, only: %i[index]
+  skip_before_action :doorkeeper_authorize!, only: %i[index]
   before_action :find_resource, only: %i[update]
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 

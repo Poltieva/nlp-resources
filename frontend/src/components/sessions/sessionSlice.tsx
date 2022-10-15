@@ -144,6 +144,7 @@ export const refreshAccessToken = createAsyncThunk(
         if (!refreshToken) {
             return rejectWithValue("No refresh token");
         }
+        console.log(refreshToken)
 
         const refreshResponse = await requestAccessTokenWithRefreshToken(
             refreshToken
@@ -232,6 +233,7 @@ export const sessionSlice = createSlice({
                 state.loading = false;
                 state.error = false;
                 state.errorMessages = [];
+                console.log(state.loading)
             })
             .addCase(loginUser.rejected, (state, action: any) => {
                 state.loading = false;

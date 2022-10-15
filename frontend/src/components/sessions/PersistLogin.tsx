@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 import {RootState, store} from '../../store';
@@ -6,33 +6,30 @@ import { refreshAccessToken } from './sessionSlice';
 import {getAccessToken} from "./storeTokens";
 
 type AppDispatch = typeof store.dispatch
-
 const useAppDispatch = () => useDispatch<AppDispatch>()
 function PersistLogin() {
-    const [loading, setLoading] = useState(useSelector((state: RootState) => state.session.loading));
+    const loading = useSelector((state: RootState) => state.session.loading);
     const accessToken = getAccessToken();
+    console.log(accessToken)
     const refreshToken = useSelector((state : RootState) => state.session.refreshToken);
     const dispatch = useAppDispatch();
-    function verifyRefreshToken() {
-        try {
-            dispatch(refreshAccessToken(refreshToken));
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
     useEffect(() => {
+        function verifyRefreshToken() {
+            try {
+                dispatch(refreshAccessToken(refreshToken));
+            } catch (error) {
+                console.log(error);
+            }
+        }
         if (!accessToken) {
             verifyRefreshToken();
-        } else {
-            setLoading(false)
-            console.log(loading)
         }
     }, [accessToken, refreshToken]);
 
     return (
         <>
-            {loading ? <p>Loading...</p> : <Outlet />}
+            {!accessToken ? <p>Loading...</p> : <Outlet />}
         </>
     )
 }

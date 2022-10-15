@@ -12,6 +12,7 @@ import {
     InputLabel,
 } from "@mui/material";
 import {useNavigate, useParams} from "react-router-dom";
+import {getAccessToken} from "./sessions/storeTokens";
 
 const RESOURCES_URL = `${process.env.REACT_APP_API_URL}/resources`;
 function ResourceForm() {
@@ -25,6 +26,7 @@ function ResourceForm() {
     const [imageUrl, setImageUrl] = useState('');
     const [keywords, setKeywords] = useState([]);
     const [medium, setMedium] = useState('');
+    const accessToken = getAccessToken()
     const resourceId = useParams().id
     const path = window.location.pathname
     const arrOfVars = ['name', 'description', 'url', 'author', 'imageUrl', 'medium', 'keywords']
@@ -34,7 +36,11 @@ function ResourceForm() {
             setLoading(false)
         } else {
             axios
-                .get(`${RESOURCES_URL}/${resourceId}`)
+                .get(`${RESOURCES_URL}/${resourceId}`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                })
                 .then((response) => {
                     console.log(response)
                     if (response.status === 200) {
@@ -81,7 +87,11 @@ function ResourceForm() {
                 payload.resource[i.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)] = eval(i)
             })
             axios
-                .put(`${RESOURCES_URL}/${resourceId}`, payload)
+                .put(`${RESOURCES_URL}/${resourceId}`, payload, {
+                    headers: {
+                        "Authorization": `Bearer ${accessToken}`
+                    }
+                })
                 .then((response) => {
                     if (response.status === 200) {
                         navigate('/')
