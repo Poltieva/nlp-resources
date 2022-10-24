@@ -1,21 +1,12 @@
 import {useEffect, useState} from "react";
-import axios from "axios";
-
-import {
-    Alert, Button,
-    Card,
-    CardContent,
-    Container,
-    FormControl,
-    FormGroup,
-    Input,
-    InputLabel,
-} from "@mui/material";
+import store from "../store";
+import { Alert, Button, Card, CardContent, Container, FormControl,
+    FormGroup, Input, InputLabel, } from "@mui/material";
 import {useNavigate, useParams} from "react-router-dom";
-import {getAccessToken} from "./sessions/storeTokens";
+import UserService from "../services/user.service";
 
-const RESOURCES_URL = `${process.env.REACT_APP_API_URL}/resources`;
 function ResourceForm() {
+    const isLoggedIn = store.getState().auth.isLoggedIn;
     const navigate = useNavigate()
     const [loading, setLoading] = useState(true);
     const [errors, setErrors] = useState([]);
@@ -26,23 +17,18 @@ function ResourceForm() {
     const [imageUrl, setImageUrl] = useState('');
     const [keywords, setKeywords] = useState([]);
     const [medium, setMedium] = useState('');
-    const accessToken = getAccessToken()
     const resourceId = useParams().id
     const path = window.location.pathname
     const arrOfVars = ['name', 'description', 'url', 'author', 'imageUrl', 'medium', 'keywords']
 
     useEffect(() => {
+        if (!isLoggedIn) { navigate('/login') }
+
         if (path === "/create-new-resource") {
             setLoading(false)
         } else {
-            axios
-                .get(`${RESOURCES_URL}/${resourceId}`, {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`
-                    }
-                })
+            UserService.getResource(resourceId)
                 .then((response) => {
-                    console.log(response)
                     if (response.status === 200) {
                         arrOfVars.forEach((value) => {
                             eval(`set${value[0].toUpperCase() + value.substr(1)}(response.data.${value.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)})`)
@@ -72,8 +58,8 @@ function ResourceForm() {
                     payload.resource[i.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)] = eval(i)
                 }
             })
-            axios
-                .post(RESOURCES_URL, payload)
+            UserService
+                .postNewResource(payload)
                 .then((response) => {
                     if (response.status === 201) {
                         navigate('/')
@@ -86,12 +72,8 @@ function ResourceForm() {
             arrOfVars.forEach((i) => {
                 payload.resource[i.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)] = eval(i)
             })
-            axios
-                .put(`${RESOURCES_URL}/${resourceId}`, payload, {
-                    headers: {
-                        "Authorization": `Bearer ${accessToken}`
-                    }
-                })
+            UserService
+                .updateResource(resourceId, payload)
                 .then((response) => {
                     if (response.status === 200) {
                         navigate('/')
@@ -102,23 +84,7 @@ function ResourceForm() {
                 });
         }
     }
-    let keywordsDiv;
-    if (keywords.length > 0) {
-        keywordsDiv = <FormGroup row={true} id="keywords-group" sx={{marginTop: "1em"}}>
-            {
-                keywords.map((keyword, index) => {
-                    return (
-                        <div key={index}>
-                            <div key={index} className="inline-block mr-2 mb-1 rounded-full bg-red-300 py-1 px-3">
-                                <p>{keyword}</p>
-                            </div>
-                        </div>
-                    )
-                })
-            }
-            <p>Uneditable for now :(</p>
-        </FormGroup>
-    }
+
     return (
         <section className="container px-10 mx-auto">
             <Container maxWidth="md">
@@ -183,7 +149,21 @@ function ResourceForm() {
                                         />
                                     </FormControl>
                                 </FormGroup>
-                                {keywordsDiv}
+                                {keywords.length > 0 && <FormGroup row={true} id="keywords-group" sx={{marginTop: "1em"}}>
+                                        {
+                                            keywords.map((keyword, index) => {
+                                                return (
+                                                    <div key={index}>
+                                                        <div key={index} className="inline-block mr-2 mb-1 rounded-full bg-red-300 py-1 px-3">
+                                                            <p>{keyword}</p>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                        <p>Uneditable for now :(</p>
+                                    </FormGroup>
+                                }
                                 <FormGroup row={true} id="submit-group" sx={{marginTop: "1em"}}>
                                     <FormControl fullWidth>
                                         <Button

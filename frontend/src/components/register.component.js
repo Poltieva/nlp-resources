@@ -6,6 +6,7 @@ import { isEmail } from "validator";
 
 import { connect } from "react-redux";
 import { register } from "../actions/auth";
+import { Navigate } from "react-router-dom";
 
 const required = (value) => {
     if (!value) {
@@ -109,7 +110,11 @@ class Register extends Component {
     }
 
     render() {
-        const { message } = this.props;
+        const { isLoggedIn, message } = this.props;
+
+        if (isLoggedIn) {
+            return <Navigate to="/profile" />;
+        }
 
         return (
             <div className="col-md-12">
@@ -191,9 +196,11 @@ class Register extends Component {
 }
 
 function mapStateToProps(state) {
+    const { isLoggedIn } = state.auth;
     const { message } = state.message;
     return {
-        message,
+        isLoggedIn,
+        message
     };
 }
 

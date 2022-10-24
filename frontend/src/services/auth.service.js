@@ -1,4 +1,5 @@
 import axios from "axios";
+import UserService from "./user.service";
 
 const LOGIN_URL = `${process.env.REACT_APP_API_URL}/oauth/token`;
 const SIGNUP_URL = `${process.env.REACT_APP_API_URL}/users`;
@@ -17,16 +18,27 @@ class AuthService {
         }
         return axios
             .post(LOGIN_URL, data)
-            .then((response) => {
+            .then(async (response) => {
+                let user;
                 if (response.data.access_token) {
-                    localStorage.setItem("user", JSON.stringify(response.data));
+                    localStorage.setItem("tokens", JSON.stringify(response.data));
+                    user = await UserService.getUserInfo()
+                    console.log(user)
+                    localStorage.setItem("user", user);
                 }
-                return response.data;
+                return {...response.data, currentUser: user};
             });
     }
 
     logout() {
-        localStorage.removeItem("user");
+        axios.post(LOGOUT_URL, {
+            "token": JSON.parse(localStorage.getItem('tokens')).access_token,
+            "client_secret": CLIENT_SECRET,
+            "client_id": CLIENT_ID
+        }).then((_) => {
+            localStorage.removeItem("tokens");
+            localStorage.removeItem("user");
+        })
     }
 
     register(username, email, password) {
