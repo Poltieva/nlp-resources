@@ -1,0 +1,151 @@
+{
+	"info": {
+		"_postman_id": "b0259ff4-80dd-417f-bcf0-940888cc79f3",
+		"name": "masters",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15746313"
+	},
+	"item": [
+		{
+			"name": "http://127.0.0.1:3000/api/v1/users/me",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer iSnX8j272muxTmkMMziWEHbK7qpwUw__GCN5jTQcsjk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/v1/users/me",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:3000/api/v1/resources",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer MLIHp41KZob_AVzOEFo75LwzYi4PBmPgB_vUxa-iQ-w",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/v1/resources",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"resources"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:3000/api/v1/oauth/revoke",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// Sign out\n{\n    \"token\": \"MLIHp41KZob_AVzOEFo75LwzYi4PBmPgB_vUxa-iQ-w\",\n    \"client_secret\": \"yn-Y8CruIhhsoTct_7uvFDaEcjyxHt8rD-qQKhdM3Ck\",\n    \"client_id\": \"QzmuysPtT8nHK2cvlEK6sXAqXVA68nyCsbb7fCNE3Lg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/v1/oauth/revoke",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"oauth",
+						"revoke"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:3000/api/v1/oauth/token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// Login\n{\n    \"grant_type\": \"refresh_token\",\n    \"client_id\": \"QzmuysPtT8nHK2cvlEK6sXAqXVA68nyCsbb7fCNE3Lg\",\n    \"client_secret\": \"yn-Y8CruIhhsoTct_7uvFDaEcjyxHt8rD-qQKhdM3Ck\",\n    \"refresh_token\": \"dfdfdfdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/v1/oauth/token",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
