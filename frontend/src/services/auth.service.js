@@ -23,21 +23,20 @@ class AuthService {
                 if (response.data.access_token) {
                     localStorage.setItem("tokens", JSON.stringify(response.data));
                     user = await UserService.getUserInfo()
-                    console.log(user)
                     localStorage.setItem("user", user);
                 }
                 return {...response.data, currentUser: user};
             });
     }
 
-    logout() {
+    logout(withUser = true) {
         axios.post(LOGOUT_URL, {
             "token": JSON.parse(localStorage.getItem('tokens')).access_token,
             "client_secret": CLIENT_SECRET,
             "client_id": CLIENT_ID
         }).then((_) => {
             localStorage.removeItem("tokens");
-            localStorage.removeItem("user");
+            if (withUser) { localStorage.removeItem("user"); }
         })
     }
 
