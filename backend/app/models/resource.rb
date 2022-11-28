@@ -4,7 +4,10 @@ class Resource < ApplicationRecord
   enum medium: {
     book: 0,
     video: 1,
-    course: 2
+    course: 2,
+    article: 3,
+    podcast: 4,
+    other: 5
   }, _prefix: true
 
   validates_presence_of :name, :medium
