@@ -8,6 +8,29 @@ const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
 const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
 
 class AuthService {
+
+    refreshTokens(token) {
+        const data = {
+            grant_type: "refresh_token",
+            client_id: CLIENT_ID,
+            client_secret: CLIENT_SECRET,
+            refresh_token: token
+        }
+        return axios
+            .post(LOGIN_URL, data)
+            .then(async (response) => {
+                let user;
+                if (response.data.access_token) {
+                    localStorage.setItem("tokens", JSON.stringify(response.data));
+                    console.log(response.data)
+                    user = await UserService.getUserInfo()
+                    localStorage.setItem("user", user);
+                }
+                return {
+                    ...response.data, currentUser: user};
+            });
+    }
+
     login(email, password) {
         const data = {
             grant_type: "password",
@@ -25,7 +48,7 @@ class AuthService {
                     user = await UserService.getUserInfo()
                     localStorage.setItem("user", user);
                 }
-                return {...response.data, currentUser: user};
+                return {...response.data, currentUser: JSON.parse(user)};
             });
     }
 

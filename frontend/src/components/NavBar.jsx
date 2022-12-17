@@ -4,7 +4,8 @@ import {Component} from "react";
 import {FaBars} from "react-icons/fa"
 import {AiOutlineClose} from "react-icons/ai"
 import {logout} from "../actions/auth";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
+import {LOGIN_SUCCESS, LOGOUT, REGISTER_SUCCESS} from "../actions/type";
 
 
 class NavBar extends Component {
@@ -13,7 +14,8 @@ class NavBar extends Component {
         this.logOut = this.logOut.bind(this);
         this.clickHandler = this.clickHandler.bind(this);
         this.state = {
-            toggler: false
+            toggler: false,
+            currentUser: this.props.user
         }
     }
     logOut() {
@@ -24,8 +26,6 @@ class NavBar extends Component {
     }
 
     render() {
-        const currentUser = this.props.user
-
         return (
             <nav className="h-auto md:h-24 p2 bg-blue-200 mx-auto flex
         justify-between md:items-center mb-4">
@@ -41,10 +41,10 @@ class NavBar extends Component {
                     <NavLink to="/about" className="nav-link" onClick={this.clickHandler}>
                         About
                     </NavLink>
-                    { currentUser && currentUser !== {} ? (
+                    { this.state.currentUser && this.state.currentUser !== {} ? (
                         <><NavLink to="/login" className="nav-link" onClick={this.logOut}>
                             Logout</NavLink><NavLink to={"/profile"} className="nav-link"
-                                                     onClick={this.clickHandler}>{currentUser.username}</NavLink></>
+                                                     onClick={this.clickHandler}>{this.state.currentUser.username}</NavLink></>
                         ): (<>
                         <NavLink to="/login" className="nav-link" onClick={this.clickHandler}>
                             Login</NavLink>
