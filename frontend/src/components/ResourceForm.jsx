@@ -20,6 +20,7 @@ function ResourceForm() {
     const resourceId = useParams().id
     const path = window.location.pathname
     const arrOfVars = ['name', 'description', 'url', 'author', 'imageUrl', 'medium', 'keywords']
+    const redirect = useNavigate()
 
     useEffect(() => {
         if (!isLoggedIn) { navigate('/login') }
@@ -34,7 +35,10 @@ function ResourceForm() {
                             eval(`set${value[0].toUpperCase() + value.substr(1)}(response.data.${value.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)})`)
                         })
                         setLoading(false)
-                    } else {
+                    } else if (response.status === 401) {
+                        redirect('/login')
+                    }
+                    else {
                         setErrors([])
                         setErrors(response.data.errors)
                     }
