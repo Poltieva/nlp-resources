@@ -35,8 +35,10 @@ jobs:
         working-directory: ./backend
         run: bundle install --jobs 4 --retry 3
       - name: Security audit dependencies
+        working-directory: ./backend
         run: bundle exec bundler-audit --update
       - name: Brakeman code scanning
+        working-directory: ./backend
         run: bundle exec brakeman
       - name: Rubocop
         working-directory: ./backend
