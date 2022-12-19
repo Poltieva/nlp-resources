@@ -32,6 +32,7 @@ jobs:
           ruby-version: '3.1.1'
           bundler-cache: true
       - name: Install dependencies
+        working-directory: ./backend
         run: bundle install --jobs 4 --retry 3
       - name: Security audit dependencies
         run: bundle exec bundler-audit --update
