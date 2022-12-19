@@ -31,11 +31,12 @@ jobs:
         with:
           ruby-version: '3.1.1'
           bundler-cache: true
-#      - name: Security audit dependencies
-#        run: bin/bundler-audit --update
+      - name: Install dependencies
+        run: bundle install --jobs 4 --retry 3
+      - name: Security audit dependencies
+        run: bundle exec bundler-audit --update
       - name: Brakeman code scanning
-          uses: standardnotes/brakeman-action@v1.0.0
-          with:
-            options: "--color -q"
-      - name: Lint Ruby files
-        run: bin/rubocop --parallel
+        run: bundle exec brakeman
+      - name: Rubocop
+        working-directory: ./backend
+        run: bundle exec rubocop --parallel
