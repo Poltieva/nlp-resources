@@ -21,3 +21,19 @@ jobs:
           bundle install --jobs 4 --retry 3
           bundle exec rails db:prepare
 #          bundle exec rspec
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1.1'
+          bundler-cache: true
+#      - name: Security audit dependencies
+#        run: bin/bundler-audit --update
+#      - name: Security audit application code
+#        run: bin/brakeman -q -w2
+      - name: Lint Ruby files
+        run: bin/rubocop --parallel
