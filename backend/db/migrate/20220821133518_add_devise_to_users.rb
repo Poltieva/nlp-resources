@@ -2,7 +2,6 @@
 
 class AddDeviseToUsers < ActiveRecord::Migration[7.0]
   def self.up
-    rename_column :users, :password_digest,  :encrypted_password
     change_table :users do |t|
 
       ## Recoverable
