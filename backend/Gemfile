@@ -11,6 +11,8 @@ gem 'rails', '~> 7.0.2', '>= 7.0.2.3'
 gem 'rubocop'
 gem 'rubocop-rails'
 
+gem 'bundler-audit'
+
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.4'
 
