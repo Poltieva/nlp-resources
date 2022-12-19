@@ -7,13 +7,13 @@ jobs:
     steps:
       - run: echo "Test secret ${{ secrets.TEST_SECRTE }}"
       - uses: actions/checkout@v3
-      - run: cd ./backend
       - name: Setup Ruby
         uses: ruby/setup-ruby@359bebbc29cbe6c87da6bc9ea3bc930432750108
         with:
           ruby-version: '3.1'
       - run: ls
       - name: Build and run tests
+        working-directory: ./backend
         env:
           RAILS_ENV: test
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
