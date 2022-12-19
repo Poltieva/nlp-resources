@@ -7,7 +7,6 @@ jobs:
     steps:
       - run: echo "Test secret ${{ secrets.TEST_SECRTE }}"
       - uses: actions/checkout@v3
-      - run: ls ${{ github.workspace }}
       - run: cd ./backend
       - name: Setup Ruby
         uses: ruby/setup-ruby@359bebbc29cbe6c87da6bc9ea3bc930432750108
