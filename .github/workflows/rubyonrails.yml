@@ -1,0 +1,22 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "Test secret ${{ secrets.Test-secret }}"
+      - uses: actions/checkout@v3
+      - name: Setup Ruby
+        uses: actions/setup-ruby@v3
+        with:
+          ruby-version: 3.1.x
+      - name: Build and run tests
+        env:
+          RAILS_ENV: test
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+          bundle exec rails db:prepare
+          bundle exec rspec
