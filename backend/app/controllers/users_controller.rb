@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   before_action :doorkeeper_authorize!
   before_action :current_user
@@ -10,7 +12,7 @@ class UsersController < ApplicationController
         username: @current_user.username
       }, status: :ok
     else
-      render json: {error: 'Unauthorized'}, status: :unauthorized
+      render json: { error: 'Unauthorized' }, status: :unauthorized
     end
   end
 end

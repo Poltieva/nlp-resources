@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DoorkeeperRegisterable
   extend ActiveSupport::Concern
 
@@ -10,11 +12,11 @@ module DoorkeeperRegisterable
 
   def render_user(user, client_app, token_type = 'Bearer')
     access_token = Doorkeeper::AccessToken
-                     .create(resource_owner_id: user.id,
-                             application_id: client_app.id,
-                             refresh_token: generate_refresh_token,
-                             expires_in: Doorkeeper.configuration.access_token_expires_in.to_i,
-                             scopes: '')
+                   .create(resource_owner_id: user.id,
+                           application_id: client_app.id,
+                           refresh_token: generate_refresh_token,
+                           expires_in: Doorkeeper.configuration.access_token_expires_in.to_i,
+                           scopes: '')
     {
       access_token: access_token.token,
       token_type: token_type,

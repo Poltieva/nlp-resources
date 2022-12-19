@@ -14,6 +14,6 @@ class Resource < ApplicationRecord
 
   serialize :keywords
   after_initialize do |r|
-    r.keywords = [] if r.keywords == nil
+    r.keywords = [] if r.keywords.nil?
   end
 end

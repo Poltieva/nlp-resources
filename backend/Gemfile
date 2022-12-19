@@ -53,4 +53,4 @@ group :development do
   # gem "spring"
 end
 
-gem "doorkeeper", "~> 5.5"
+gem 'doorkeeper', '~> 5.5'

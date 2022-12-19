@@ -12,7 +12,7 @@ class ApplicationController < ActionController::API
   def configure_permitted_parameters
     # Permit the `subscribe_newsletter` parameter along with the other
     # sign up parameters.
-    devise_parameter_sanitizer.permit(:registration, keys: [:email, :client_id, :password])
+    devise_parameter_sanitizer.permit(:registration, keys: %i[email client_id password])
   end
 
   private
