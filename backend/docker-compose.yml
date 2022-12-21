@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  drkiq:
+    build:
+      context: .
+      dockerfile: Dockerfile.rails
+    volumes:
+      - .:/opt/app
+    ports:
+      - '8010:8010'
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 8010 -b '0.0.0.0'"
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.nginx
+    links:
+      - drkiq
+    ports:
+      - '8020:8020'

@@ -1,0 +1,14 @@
+FROM ruby:3.1.1 AS rails-toolbox
+
+# Default directory
+ENV INSTALL_PATH /opt/app
+RUN mkdir -p $INSTALL_PATH
+
+WORKDIR /opt/app
+COPY Gemfile /opt/app/Gemfile
+COPY Gemfile.lock /opt/app/Gemfile.lock
+RUN bundle install
+COPY . /opt/app
+EXPOSE 8010
+# Start the main process.
+CMD ["rails", "server", "-b", "0.0.0.0", "-p", "8010"]
