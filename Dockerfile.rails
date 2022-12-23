@@ -6,10 +6,10 @@ RUN mkdir -p $INSTALL_PATH
 
 WORKDIR /opt/app
 
-COPY Gemfile /opt/app/Gemfile
-COPY Gemfile.lock /opt/app/Gemfile.lock
+COPY ./backend/Gemfile /opt/app/Gemfile
+COPY ./backend/Gemfile.lock /opt/app/Gemfile.lock
 RUN bundle install
-COPY . /opt/app
+COPY ./backend/ /opt/app
 EXPOSE 8010
 # Start the main process.
 CMD ["rails", "server", "-b", "0.0.0.0", "-p", "8010"]

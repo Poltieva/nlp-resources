@@ -18,7 +18,7 @@ services:
       context: .
       dockerfile: Dockerfile.rails
     volumes:
-      - .:/opt/app
+      - ./backend:/opt/app
       - bundle:/usr/local/bundle
     ports:
       - '8010:8010'
@@ -29,7 +29,7 @@ services:
   nginx:
     build:
       context: .
-      dockerfile: ./Dockerfile.nginx
+      dockerfile: Dockerfile.nginx
     links:
       - drkiq
     ports:
