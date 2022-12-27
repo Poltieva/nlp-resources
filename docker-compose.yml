@@ -1,0 +1,48 @@
+version: "3.9"
+
+volumes:
+  bundle:
+  db:
+services:
+  db:
+    image: nouchka/sqlite3:latest
+    volumes:
+      - ./backend/db:/root/db
+    stdin_open: true
+    tty: true
+    ports:
+      - '9000:9000'
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.rails
+    volumes:
+      - ./backend:/opt/app
+      - bundle:/usr/local/bundle
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    links:
+      - api
+    ports:
+      - '8020:8020'
+
+  react-ui:
+    build:
+      context: .
+      dockerfile: Dockerfile.react
+    ports:
+      - "3001:3001"
+    container_name: react-ui
+    stdin_open: true
+    volumes:
+      - ./frontend:/usr/src/app/frontend
+      - /usr/src/app/frontend/node_modules
