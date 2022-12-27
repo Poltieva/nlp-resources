@@ -11,6 +11,7 @@ class Resource < ApplicationRecord
   }, _prefix: true
 
   validates_presence_of :name, :medium
+  validates_uniqueness_of :name, scope: %i[author medium]
 
   serialize :keywords
   after_initialize do |r|
