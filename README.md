@@ -14,68 +14,32 @@ Even if a resource is a book, it is a design decision
 to provide only a url to another site/store to
 avoid copyright issues.
 
-Topics I need to cover for my performance review:
+#How to run
+Prerequisites: Docker, docker-compose.
 
-* Assists in designing, implementation, and usage 
-of API within internal or external standards and
-policies ✅  
-* Assists in data management, database design
-creation, and modification activities, and query
-language techniques usage ✅
-* Assists in components design implementation with
-the help of design patterns by using best practices
-and approaches corresponding to competency 
-profile ❌
-* Assists in code implementation of components or
-modules with the help of framework and it's 
-extensions according to defined approaches and
-practices ?
-* Performs code implementation using a wide range
-of primary language coding techniques and 
-approaches ✅
-* Assists in refactoring and reengineering of 
-modules and components according to best practices
-within corresponding to competency profile ❌
-* Performs code implementation with the use of 
-advanced techniques and code optimization practices
-in the scope of supportive language usage ✅
-* Assists in integration testing strategy and
-tests implementation by using tools and techniques
-defined within external and internal approaches, 
-conventions, practices ❌
-* Assists in collecting test coverage statistic
-by using defined tools and methods within
-corresponding to the competency profile ❌
-* Performs tests framework/extensions design, 
-configuration, implementation, and conventions
-usage according to defined external and internal
-practices ❌
-* Performs construction testing with the help of
-techniques that are employed within external and 
-internal practices and conventions ❌
-* Performs unit test implementation with the
-application of testing techniques and tools 
-within internal and external practices and 
-approaches ❌
-* Follows architectural design processes 
-associated with the use of standard notations, 
-diagramming techniques, models, and patterns ❌
-* Assists in the use of models, design patterns, 
-notations, frameworks to design software components
-and modules according to best practices and 
-standards ❌
-* Follows design of software components and
-modules according to best practices and standards ❌
-* Assists in design quality analysis and evaluation 
-processes ❌
-* Assist in applying the design techniques to 
-the design of software components and modules 
-practices/standards ?
-* Assists in restructuring and refactoring
-process in software design with the use of 
-appropriate methods ❌
-* Follows restructuring and refactoring methods in
-software design ❌
-* Assists in requirement elicitation and analysis
-processes within using appropriate methods and 
-techniques ❌
+
+Running for the first time
+1. Run `docker-compose up --build`
+2. Run `docker-compose run api rails db:prepare`
+3. To seed the development database with fake data, run
+`docker-compose run api rails db:seed`
+4. Run `docker-compose run api rails c` to get into RoR console
+5. Once there, run `Doorkeeper::Application.last.uid` and copy the string
+   (without quotes) to your /frontend/env.local or /frontend/env.development.local
+as REACT_APP_CLIENT_ID
+6. Run `Doorkeeper::Application.last.secret` and copy the string
+   (without quotes) to your /frontend/env.local or /frontend/env.development.local
+   as REACT_APP_CLIENT_SECRET
+7. To exit the console, run `exit`
+
+This will setup the environment and start both backend and frontend,
+so now you can visit http://localhost:3001 to see the frontend or
+http://localhost:3000/api/v1/ to get the access to the api.
+
+To stop containers, run `docker-compose down`.
+
+To start containers regularly, run `docker-compose up` or `docker-compose up -d` for a detached mode.
+
+To run backend tests, run `docker-compose run api bundle exec rspec`.
+
+To run backend linter (rubocop), run `docker-compose run api bundle exec rubocop -a`.
