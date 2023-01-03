@@ -5,14 +5,16 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  validates_presence_of :username, :email, :password
-  validates :username, uniqueness: { case_sensitive: false },
+  validates :email, :password, presence: true
+  # rubocop:disable Rails/UniqueValidationWithoutIndex:
+  validates :username, uniqueness: true,
            presence: true, allow_blank: false,
            format: { with: /\A[a-zA-Z0-9_-]+\z/ }
+  # rubocop:enable Rails/UniqueValidationWithoutIndex:
   validates :email, format: URI::MailTo::EMAIL_REGEXP
 
   def self.authenticate(email, password)
-    user = User.find_for_authentication(email: email)
+    user = User.find_for_authentication(email:)
     user&.valid_password?(password) ? user : nil
   end
 end

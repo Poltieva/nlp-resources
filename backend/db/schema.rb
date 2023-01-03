@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_21_174818) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_03_154237) do
   create_table "oauth_access_tokens", force: :cascade do |t|
     t.integer "resource_owner_id"
     t.integer "application_id", null: false
@@ -49,6 +49,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_21_174818) do
     t.string "author"
     t.text "keywords"
     t.text "image_url", default: "https://placekitten.com/640/360"
+    t.index ["name", "author", "medium"], name: "index_resources_on_name_and_author_and_medium", unique: true
   end
 
   create_table "users", force: :cascade do |t|

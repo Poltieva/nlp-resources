@@ -43,3 +43,15 @@ To start containers regularly, run `docker-compose up` or `docker-compose up -d`
 To run backend tests, run `docker-compose run api bundle exec rspec`.
 
 To run backend linter (rubocop), run `docker-compose run api bundle exec rubocop -a`.
+
+!NB: if you make changes to /backend/Gemfile or install yarn packages to /frontend,
+you'll need to run `docker-compose build` or you won't see the changes.
+
+## How to deploy
+```
+######### ensure that you have the changes ready amd merged
+git checkout main
+git pull
+##########
+docker-compose run api cap production deploy
+```
