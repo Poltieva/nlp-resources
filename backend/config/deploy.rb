@@ -86,6 +86,7 @@ namespace :deploy do
   end
 
   before :starting,     :check_revision
+  before :starting,     :upload_yml
   after  :finishing,    :cleanup
   after  :finishing,    :restart
 end
