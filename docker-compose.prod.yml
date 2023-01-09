@@ -24,4 +24,4 @@ services:
       - '3000:3000'
     depends_on:
       - db
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '127.0.0.1' -e production"
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0' -e production"
