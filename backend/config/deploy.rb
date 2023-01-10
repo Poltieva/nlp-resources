@@ -66,7 +66,6 @@ namespace :deploy do
     on roles(:app) do
       before 'deploy:restart', 'puma:start'
       invoke 'deploy'
-      invoke 'upload_yml'
     end
   end
 
@@ -86,7 +85,7 @@ namespace :deploy do
     end
   end
 
-  # before :starting,     :check_revision
+  before :starting,     :check_revision
   before :starting,     :upload_yml
   after  :finishing,    :cleanup
   after  :finishing,    :restart
