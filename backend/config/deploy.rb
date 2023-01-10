@@ -1,9 +1,10 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.17.1"
 
-server '157.230.101.10', roles: [:web, :app, :db], primary: true
+server '167.172.182.52', roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:Poltieva/nlp-resources.git'
+set :repo_tree,       'backend'
 set :application,     'nlp-resources'
 set :user,            'deploy'
 set :puma_threads,    [4, 16]
