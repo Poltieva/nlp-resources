@@ -15,7 +15,8 @@ set :branch,          :main
 set :pty,             false
 set :use_sudo,        false
 set :stage,           :production
-set :deploy_via,      :remote_cache
+set :rails_env,       :production
+# set :deploy_via,      :remote_cache
 set :deploy_to,       "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
 set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"
 set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
@@ -31,7 +32,8 @@ set :puma_init_active_record, true  # Change to false when not using ActiveRecor
 # set :scm,           :git
 # set :format,        :pretty
 # set :log_level,     :debug
-# set :keep_releases, 5
+set :keep_releases, 3
+set :conditionally_migrate, true
 
 ## Linked Files & Directories (Default None):
 set :linked_files, %w{config/database.yml  config/master.key}
@@ -69,12 +71,12 @@ namespace :deploy do
     end
   end
 
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      invoke 'puma:restart'
-    end
-  end
+  # desc 'Restart application'
+  # task :restart do
+  #   on roles(:app), in: :sequence, wait: 5 do
+  #     invoke 'puma:restart'
+  #   end
+  # end
 
   desc 'Upload YAML files.'
   task :upload_yml do
@@ -86,11 +88,12 @@ namespace :deploy do
   end
 
   before :starting,     :check_revision
-  before :starting,     :upload_yml
-  after  :finishing,    :cleanup
-  after  :finishing,    :restart
+  before 'deploy:starting', :upload_yml
+  # before :starting,     :upload_yml
+  # after  :finishing,    :cleanup
+  # after  :finishing,    :restart
 end
-
+after 'deploy:publishing', 'application:reload'
 # ps aux | grep puma    # Get puma pid
 # kill -s SIGUSR2 pid   # Restart puma
 # kill -s SIGTERM pid   # Stop puma
