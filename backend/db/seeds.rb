@@ -1,5 +1,3 @@
-require 'faker'
-
 if Rails.env.production?
   Doorkeeper::Application.create!(
     name: "React", redirect_uri: "", scopes: "",
@@ -7,6 +5,7 @@ if Rails.env.production?
     secret: ENV['REACT_APP_CLIENT_SECRET']
   )
 else
+  require 'faker'
   if Resource.all.empty?
     10.times do
       Resource.create!(
