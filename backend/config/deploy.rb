@@ -84,6 +84,7 @@ namespace :deploy do
   task :seed_with_frontend_keys do
     on roles(:db) do
       execute "rake db:seed"
+    end
   end
 
   before :starting,     :check_revision
