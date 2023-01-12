@@ -16,7 +16,6 @@ set :pty,             false
 set :use_sudo,        false
 set :stage,           :production
 set :rails_env,       :production
-# set :deploy_via,      :remote_cache
 set :deploy_to,       "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
 set :puma_bind,       "unix://#{shared_path}/tmp/sockets/#{fetch(:application)}-puma.sock"
 set :puma_state,      "#{shared_path}/tmp/pids/puma.state"
@@ -71,29 +70,29 @@ namespace :deploy do
     end
   end
 
-  # desc 'Restart application'
-  # task :restart do
-  #   on roles(:app), in: :sequence, wait: 5 do
-  #     invoke 'puma:restart'
-  #   end
-  # end
-
   desc 'Upload YAML files.'
   task :upload_yml do
     on roles(:app) do
       execute "mkdir #{shared_path}/config -p"
       upload! StringIO.new(File.read("config/database.yml")), "#{shared_path}/config/database.yml"
       upload! StringIO.new(File.read("config/master.key")), "#{shared_path}/config/master.key"
+      upload! StringIO.new(File.read(".env")), "#{shared_path}/.env"
     end
+  end
+
+  desc 'Seed db with frontend keys'
+  task :seed_with_frontend_keys do
+    execute "rake db:seed"
   end
 
   before :starting,     :check_revision
   before 'deploy:starting', :upload_yml
-  # before :starting,     :upload_yml
-  # after  :finishing,    :cleanup
-  # after  :finishing,    :restart
+  after 'deploy:migrating', :seed_with_frontend_keys
+  after  :finishing,    :cleanup
+  after  :finishing,    :restart
 end
 after 'deploy:publishing', 'application:reload'
+
 # ps aux | grep puma    # Get puma pid
 # kill -s SIGUSR2 pid   # Restart puma
 # kill -s SIGTERM pid   # Stop puma
