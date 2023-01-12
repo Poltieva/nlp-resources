@@ -83,7 +83,11 @@ namespace :deploy do
   desc 'Seed db with frontend keys'
   task :seed_with_frontend_keys do
     on roles(:db) do
-      run "cd #{current_path}; bundle exec rake db:seed RAILS_ENV=#{rails_env}"
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, "db:seed"
+        end
+      end
     end
   end
 
