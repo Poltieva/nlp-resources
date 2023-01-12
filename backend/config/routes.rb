@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   use_doorkeeper
-  # root "api/v1/resources#index"
-  get "here", to: "users#here"
-  root "users#here"
+  root "api/v1/resources#index"
 
   namespace :api do
     namespace :v1 do

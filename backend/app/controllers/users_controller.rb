@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :doorkeeper_authorize!, except: :here
-  before_action :current_user, except: :here
-
-  def here
-    render json: {here: 'Working'}
-  end
+  before_action :doorkeeper_authorize!
+  before_action :current_user
 
   def me
     if @current_user
