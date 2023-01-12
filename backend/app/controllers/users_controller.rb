@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   before_action :doorkeeper_authorize!, except: :here
-  before_action :current_user
+  before_action :current_user, except: :here
 
   def here
     render json: {here: 'Working'}
