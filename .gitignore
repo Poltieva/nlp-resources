@@ -3,6 +3,8 @@
 /backend/log/*
 /backend/.env
 /frontend/.env
+/frontend/.env.production
+/frontend/.env.test
 /backend/.bundle
 /db/*.sqlite3
 /db/*.sqlite3-*
