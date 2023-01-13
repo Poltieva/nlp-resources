@@ -2,9 +2,9 @@
 /backend/tmp/*
 /backend/log/*
 /backend/.env
-/frontend/.env
-/frontend/.env.production
-/frontend/.env.test
+/docs/.env
+/docs/.env.production
+/docs/.env.test
 /backend/.bundle
 /db/*.sqlite3
 /db/*.sqlite3-*

@@ -26,15 +26,6 @@ services:
       - db
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
 
-  nginx:
-    build:
-      context: .
-      dockerfile: Dockerfile.nginx
-    links:
-      - api
-    ports:
-      - '8020:8020'
-
   react-ui:
     build:
       context: .
@@ -44,5 +35,5 @@ services:
     container_name: react-ui
     stdin_open: true
     volumes:
-      - ./frontend:/usr/src/app/frontend
-      - /usr/src/app/frontend/node_modules
+      - ./docs:/usr/src/app/frontend
+      - /usr/src/app/docs/node_modules

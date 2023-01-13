@@ -4,7 +4,7 @@
 
 * Rails version - 7.0.2.3
 
-Back-end for my master's project and a pet-project
+My master's project and a pet-project
 for my personal growth as a developer.
 
 This is an archive with books, courses, videos etc.
@@ -28,7 +28,7 @@ Running for the first time
    (without quotes) to your /frontend/env.local or /frontend/env.development.local
 as REACT_APP_CLIENT_ID
 6. Run `Doorkeeper::Application.last.secret` and copy the string
-   (without quotes) to your /frontend/env.local or /frontend/env.development.local
+   (without quotes) to your /docs/env.local or /docs/env.development.local
    as REACT_APP_CLIENT_SECRET
 7. To exit the console, run `exit`
 
