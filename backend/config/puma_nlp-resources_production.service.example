@@ -1,0 +1,16 @@
+# /etc/systemd/system/puma_nlp-resources_production.service
+
+[Unit]
+Description=Puma Rails Server
+Wants=network-online.target
+After=network.target network-online.target
+[Service]
+Type=simple
+User=deploy
+WorkingDirectory=/home/deploy/apps/nlp-resources/current
+ExecStart=/bin/bash -lc 'bundle exec puma -C /home/deploy/apps/nlp-resources/shared/puma.rb -p 3000'
+ExecStop=/bin/bash -lc 'bundle exec pumactl -S /home/deploy/apps/nlp-resources/shared/tmp/pids/puma.pid stop'
+TimeoutSec=15
+Restart=always
+[Install]
+WantedBy=multi-user.target
