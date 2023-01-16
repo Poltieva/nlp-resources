@@ -1,45 +1,67 @@
-// import AppRoutes from './components/AppRoutes';
-// import { history } from './helpers/history';
-import {Component} from "react";
-// import {clearMessage} from "./actions/message";
-// import {BrowserRouter} from "react-router-dom";
-import {HashRouter as Router, Route, Routes} from "react-router-dom";
+// // import AppRoutes from './components/AppRoutes';
+// // import { history } from './helpers/history';
+// import {Component} from "react";
+// // import {clearMessage} from "./actions/message";
+// // import {BrowserRouter} from "react-router-dom";
+// import {HashRouter as Router, Route, Routes} from "react-router-dom";
+//
+// class App extends Component {
+//     // constructor(props) {
+//     //     super(props);
+//     //
+//     //     history.listen((location) => {
+//     //         props.dispatch(clearMessage()); // clear message when changing location
+//     //     });
+//     // }
+//
+//     render() {
+//         return (
+//             // <BrowserRouter history={history}>
+//             <Router>
+//                 <Routes>
+//                     <Route>
+//                         <Route path="/" element={<Resources />} />
+//                         <Route path="/about" element={<About />} />
+//                     </Route>
+//                 </Routes>
+//                 {/*<AppRoutes />*/}
+//             </Router>
+//
+//             // </BrowserRouter>
+//         )
+//     }
+// }
+//
+// function About() {
+//     return(
+//         <p>About</p>
+//     )
+// }
+// function Resources() {
+//     return(
+//         <p>Resources</p>
+//     )
+// }
+// export default App;
 
-class App extends Component {
-    // constructor(props) {
-    //     super(props);
-    //
-    //     history.listen((location) => {
-    //         props.dispatch(clearMessage()); // clear message when changing location
-    //     });
-    // }
 
-    render() {
-        return (
-            // <BrowserRouter history={history}>
-            <Router>
-                <Routes>
-                    <Route>
-                        <Route path="/" element={<Resources />} />
-                        <Route path="/about" element={<About />} />
-                    </Route>
-                </Routes>
-                {/*<AppRoutes />*/}
-            </Router>
+import './App.css';
 
-            // </BrowserRouter>
-        )
-    }
+
+function App() {
+    return (
+        <div className="App">
+            <Resources />
+
+        </div>
+    );
 }
 
-function About() {
-    return(
-        <p>About</p>
-    )
-}
 function Resources() {
     return(
         <p>Resources</p>
     )
 }
+
+
 export default App;
