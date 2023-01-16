@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/nlp-resources/static/css/main.22517e98.css",
+    "main.js": "/nlp-resources/static/js/main.d6000fca.js",
+    "index.html": "/nlp-resources/index.html",
+    "main.22517e98.css.map": "/nlp-resources/static/css/main.22517e98.css.map",
+    "main.d6000fca.js.map": "/nlp-resources/static/js/main.d6000fca.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.22517e98.css",
+    "static/js/main.d6000fca.js"
+  ]
+}
