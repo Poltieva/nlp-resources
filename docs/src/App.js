@@ -1,9 +1,9 @@
-import AppRoutes from './components/AppRoutes';
+// import AppRoutes from './components/AppRoutes';
 // import { history } from './helpers/history';
 import {Component} from "react";
 // import {clearMessage} from "./actions/message";
 // import {BrowserRouter} from "react-router-dom";
-import { HashRouter as Router } from "react-router-dom";
+import {HashRouter as Router, Route, Routes} from "react-router-dom";
 
 class App extends Component {
     // constructor(props) {
@@ -18,11 +18,28 @@ class App extends Component {
         return (
             // <BrowserRouter history={history}>
             <Router>
-                <AppRoutes />
+                <Routes>
+                    <Route>
+                        <Route path="/" element={<Resources />} />
+                        <Route path="/about" element={<About />} />
+                    </Route>
+                </Routes>
+                {/*<AppRoutes />*/}
             </Router>
 
             // </BrowserRouter>
         )
     }
+}
+
+function About() {
+    return(
+        <p>About</p>
+    )
+}
+function Resources() {
+    return(
+        <p>Resources</p>
+    )
 }
 export default App;
