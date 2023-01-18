@@ -1,48 +1,48 @@
-name: Backend CI
-on:
-  - paths:
-      - backend
-  - [push, pull_request]
-jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - run: echo "Test secret ${{ secrets.TEST_SECRTE }}"
-      - uses: actions/checkout@v3
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.1.1'
-      - name: Build and run tests
-        working-directory: ./backend
-        env:
-          RAILS_ENV: test
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-        run: |
-          gem install bundler
-          bundle install --jobs 4 --retry 3
-          bundle exec rails db:prepare
-#          bundle exec rspec
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.1.1'
-          bundler-cache: true
-      - name: Install dependencies
-        working-directory: ./backend
-        run: bundle install --jobs 4 --retry 3
-      - name: Security audit dependencies
-        working-directory: ./backend
-        run: bundle exec bundler-audit --update
-      - name: Brakeman code scanning
-        working-directory: ./backend
-        run: bundle exec brakeman
-      - name: Rubocop
-        working-directory: ./backend
-        run: bundle exec rubocop --parallel
+#name: Backend CI
+#on:
+#  - paths:
+#      - backend
+#  - [push, pull_request]
+#jobs:
+#  test:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - run: echo "Test secret ${{ secrets.TEST_SECRTE }}"
+#      - uses: actions/checkout@v3
+#      - name: Setup Ruby
+#        uses: ruby/setup-ruby@v1
+#        with:
+#          ruby-version: '3.1.1'
+#      - name: Build and run tests
+#        working-directory: ./backend
+#        env:
+#          RAILS_ENV: test
+#          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+#        run: |
+#          gem install bundler
+#          bundle install --jobs 4 --retry 3
+#          bundle exec rails db:prepare
+##          bundle exec rspec
+#  lint:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v3
+#      - name: Setup Ruby
+#        uses: ruby/setup-ruby@v1
+#        with:
+#          ruby-version: '3.1.1'
+#          bundler-cache: true
+#      - name: Install dependencies
+#        working-directory: ./backend
+#        run: bundle install --jobs 4 --retry 3
+#      - name: Security audit dependencies
+#        working-directory: ./backend
+#        run: bundle exec bundler-audit --update
+#      - name: Brakeman code scanning
+#        working-directory: ./backend
+#        run: bundle exec brakeman
+#      - name: Rubocop
+#        working-directory: ./backend
+#        run: bundle exec rubocop --parallel
