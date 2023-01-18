@@ -12,6 +12,9 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./docs
 
     steps:
       - name: Checkout frontend code
@@ -23,7 +26,7 @@ jobs:
           node-version: 13.x
 
       - name: Install NPM packages
-        run: cd docs & ls -a
+        run: npm ci
 
       - name: Build project
         run: npm run build
@@ -32,12 +35,15 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: production-files
-          path: ./docs/build
+          path: ./build
 
   deploy:
     name: Deploy
     needs: build
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./docs
     if: github.ref == 'refs/heads/main'
 
     steps:
