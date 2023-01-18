@@ -35,5 +35,5 @@ services:
     container_name: react-ui
     stdin_open: true
     volumes:
-      - ./docs:/usr/src/app/frontend
-      - /usr/src/app/docs/node_modules
+      - ./frontend:/usr/src/app/frontend
+      - /usr/src/app/frontend/node_modules

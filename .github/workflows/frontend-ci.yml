@@ -36,18 +36,12 @@ jobs:
         with:
           name: production-files
           if-no-files-found: warn
-          path: docs/build
-
-      - name: Check build
-        run: ls build
+          path: frontend/build
 
   deploy:
     name: Deploy
     needs: build
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./docs
     if: github.ref == 'refs/heads/main'
 
     steps:
@@ -55,10 +49,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: production-files
-          path: ./docs/build
+          path: ./frontend/build
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
-          publish_dir: ./docs/build
+          publish_dir: ./frontend/build

@@ -2,8 +2,8 @@ FROM node:alpine
 
 WORKDIR /app
 
-COPY ./docs/package*.json ./
-COPY ./docs ./
+COPY ./frontend/package*.json ./
+COPY ./frontend ./
 
 RUN yarn install
 
