@@ -23,7 +23,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 13.x
+          node-version: 16.x
 
       - name: Install NPM packages
         run: npm ci
@@ -35,11 +35,11 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: production-files
-          if-no-files-found: warn
-          path: ./build/
+          if-no-files-found: error
+          path: build/
 
       - name: Check build
-        run: ls -a
+        run: ls build
 
   deploy:
     name: Deploy
