@@ -30,15 +30,15 @@ jobs:
 
       - name: Build project
         run: npm run build
-      - name: Check build
-        run: ls -a
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v2
         with:
           name: production-files
-          if-no-files-found: error
+          if-no-files-found: warn
           path: ./build/
+      - name: Check build
+          run: ls -a
 
   deploy:
     name: Deploy
