@@ -26,7 +26,8 @@ jobs:
         run: cd docs & npm ci
 
       - name: Build project
-        run: cd docs & npm run build
+        - run: ls -a
+#        run: cd docs & npm run build
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v2
