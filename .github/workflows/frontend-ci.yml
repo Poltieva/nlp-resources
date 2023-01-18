@@ -18,20 +18,18 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 13.x
-          working-directory: ./frontend
 
       - name: Install NPM packages
-        run: npm ci
+        run: cd ./frontend & npm ci
 
       - name: Build project
-        run: npm run build
+        run: cd ./frontend & npm run build
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v2
         with:
-          working-directory: ./frontend
           name: production-files
-          path: ./build
+          path: ./frontend/build
 
   deploy:
     name: Deploy
@@ -43,12 +41,11 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          working-directory: ./frontend
           name: production-files
-          path: ./build
+          path: ./frontend/build
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./frontend/build
