@@ -11,8 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout frontend code
+        uses: Bhacaz/checkout-files@v2
+        with:
+          - files: /frontend
 
       - name: Install Node.js
         uses: actions/setup-node@v1
@@ -20,16 +22,16 @@ jobs:
           node-version: 13.x
 
       - name: Install NPM packages
-        run: cd ./frontend & npm ci
+        run: npm ci
 
       - name: Build project
-        run: cd ./frontend & npm run build
+        run: npm run build
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v2
         with:
           name: production-files
-          path: ./frontend/build
+          path: ./build
 
   deploy:
     name: Deploy
@@ -42,10 +44,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: production-files
-          path: ./frontend/build
+          path: ./build
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
-          publish_dir: ./frontend/build
+          publish_dir: ./build
