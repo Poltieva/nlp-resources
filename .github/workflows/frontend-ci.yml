@@ -17,7 +17,7 @@ jobs:
       - name: Checkout frontend code
         uses: Bhacaz/checkout-files@v2
         with:
-          - files: frontend/
+          - files: docs
 
       - name: Install Node.js
         uses: actions/setup-node@v1
