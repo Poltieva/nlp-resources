@@ -36,7 +36,7 @@ jobs:
         with:
           name: production-files
           if-no-files-found: warn
-          path: build/
+          path: docs/build
 
       - name: Check build
         run: ls build
