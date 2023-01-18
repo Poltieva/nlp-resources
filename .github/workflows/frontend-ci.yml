@@ -2,6 +2,8 @@ name: Build & deploy
 
 on:
   push:
+    paths:
+      - frontend
     branches:
       - main
 

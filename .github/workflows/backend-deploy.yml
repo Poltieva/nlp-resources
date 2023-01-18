@@ -2,6 +2,8 @@ name: Deploy with Capistrano
 
 on:
   push:
+    paths:
+      - backend
     branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
