@@ -37,8 +37,9 @@ jobs:
           name: production-files
           if-no-files-found: warn
           path: ./build/
+
       - name: Check build
-          run: ls -a
+        run: ls -a
 
   deploy:
     name: Deploy
