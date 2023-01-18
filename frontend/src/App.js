@@ -57,7 +57,7 @@ function App() {
 
 function Resources() {
     return(
-        <p>Resources</p>
+        <p>{process.env.PORT}</p>
     )
 }
 
