@@ -3,8 +3,8 @@ name: Build & deploy
 on:
   push:
     paths:
-      - frontend
-      - .github/frontend-ci.yml
+      - ./frontend
+      - ./.github/frontend-ci.yml
     branches:
       - main
 
