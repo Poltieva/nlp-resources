@@ -58,7 +58,7 @@ function App() {
 function Resources() {
     // console.error(process.env.REACT_APP_TEST)
     return(
-        <p>dddddddddd</p>
+        <p>dddddddddd {process.env.REACT_APP_API_URL}</p>
         // <p>{process.env.REACT_APP_API_URL}</p>
     )
 }
