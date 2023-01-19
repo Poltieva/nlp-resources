@@ -57,7 +57,8 @@ function App() {
 
 function Resources() {
     return(
-        <p>{process.env.PORT}</p>
+        <p>{process.env.REACT_APP_TEST}</p>
+        // <p>{process.env.REACT_APP_API_URL}</p>
     )
 }
 
