@@ -20,3 +20,6 @@
 !/tmp/storage/
 !/tmp/storage/.keep
 /config/master.key
+/backend/config/server.crt
+/backend/config/server.csr
+/backend/config/server.key
