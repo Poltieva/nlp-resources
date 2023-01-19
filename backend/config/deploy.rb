@@ -37,7 +37,7 @@ set :keep_releases, 3
 set :conditionally_migrate, true
 
 ## Linked Files & Directories (Default None):
-set :linked_files, %w{config/database.yml  config/master.key}
+set :linked_files, %w{config/database.yml  config/master.key config/server.crt config/server.csr config/server.key}
 set :linked_dirs,  %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 namespace :puma do
@@ -79,6 +79,10 @@ namespace :deploy do
       upload! StringIO.new(File.read("config/database.yml")), "#{shared_path}/config/database.yml"
       upload! StringIO.new(File.read("config/master.key")), "#{shared_path}/config/master.key"
       upload! StringIO.new(File.read(".env")), "#{shared_path}/.env"
+
+      upload! StringIO.new(File.read("config/server.crt")), "#{shared_path}/config/server.crt"
+      upload! StringIO.new(File.read("config/server.csr")), "#{shared_path}/config/server.csr"
+      upload! StringIO.new(File.read("config/server.key")), "#{shared_path}/config/server.key"
     end
   end
 
