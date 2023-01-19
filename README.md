@@ -28,7 +28,7 @@ Running for the first time
    (without quotes) to your /frontend/env.local or /frontend/env.development.local
 as REACT_APP_CLIENT_ID
 6. Run `Doorkeeper::Application.last.secret` and copy the string
-   (without quotes) to your /docs/env.local or /docs/env.development.local
+   (without quotes) to your /frontend/env.local or /frontend/env.development.local
    as REACT_APP_CLIENT_SECRET
 7. To exit the console, run `exit`
 
@@ -49,9 +49,12 @@ you'll need to run `docker-compose build` or you won't see the changes.
 
 ## How to deploy
 ```
-######### ensure that you have the changes ready amd merged
+######### ensure that you have the changes ready and merged
 git checkout main
 git pull
 ##########
 docker-compose run api cap production deploy
 ```
+Frontend deploy happens automatically after push to main. To see the changes,
+you need to wait for "build & deploy" AND "pages build and deploy"
+workflows to finish, and possibly clear browser cache.
