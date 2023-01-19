@@ -26,7 +26,7 @@ jobs:
       - name: Build project
         run: npm run build
         env:
-          - REACT_APP_TEST: ${{ secrets.REACT_APP_TEST }}
+          REACT_APP_TEST: ${{ secrets.REACT_APP_TEST }}
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
