@@ -1,0 +1,35 @@
+name: Build & deploy
+
+on:
+  push:
+    #    paths:
+    #      - 'frontend/**'
+    #      - '.github/frontend-ci.yml'
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+
+    steps:
+      - name: Checkout frontend code
+        uses: actions/checkout@v2
+
+      - name: Install NPM packages
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+        env:
+          - REACT_APP_TEST
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: build
