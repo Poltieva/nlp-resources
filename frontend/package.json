@@ -1,7 +1,6 @@
 {
   "name": "frontend",
   "version": "0.1.0",
-  "homepage": "/nlp-resources/#",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.0",
@@ -51,7 +50,6 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.7",
-    "gh-pages": "^4.0.0",
     "postcss": "^8.4.14",
     "redux-devtools-extension": "^2.13.9",
     "tailwindcss": "^3.1.4"

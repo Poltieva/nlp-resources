@@ -1,11 +1,25 @@
 import axios from "axios";
 import UserService from "./user.service";
 
-const LOGIN_URL = `${process.env.REACT_APP_API_URL}/oauth/token`;
-const SIGNUP_URL = `${process.env.REACT_APP_API_URL}/users`;
-const LOGOUT_URL = `${process.env.REACT_APP_API_URL}/oauth/revoke`;
-const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
-const CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
+let LOGIN_URL = undefined
+let SIGNUP_URL = undefined
+let LOGOUT_URL = undefined
+let CLIENT_ID = undefined
+let CLIENT_SECRET = undefined;
+
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    LOGIN_URL = `${process.env.REACT_APP_API_URL}/oauth/token`;
+    SIGNUP_URL = `${process.env.REACT_APP_API_URL}/users`;
+    LOGOUT_URL = `${process.env.REACT_APP_API_URL}/oauth/revoke`;
+    CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
+    CLIENT_SECRET = process.env.REACT_APP_CLIENT_SECRET;
+} else {
+    LOGIN_URL = `http://167.172.182.52/oauth/token`;
+    SIGNUP_URL = `http://167.172.182.52/users`;
+    LOGOUT_URL = `http://167.172.182.52/oauth/revoke`;
+    CLIENT_ID = null //process.env.REACT_APP_CLIENT_ID;
+    CLIENT_SECRET = null //process.env.REACT_APP_CLIENT_SECRET;
+}
 
 class AuthService {
 
