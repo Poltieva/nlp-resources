@@ -37,7 +37,7 @@ set :keep_releases, 3
 set :conditionally_migrate, true
 
 ## Linked Files & Directories (Default None):
-set :linked_files, %w{config/database.yml  config/master.key config/server.crt config/server.csr config/server.key}
+set :linked_files, %w{config/database.yml  config/master.key}
 set :linked_dirs,  %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 namespace :puma do
