@@ -9,7 +9,7 @@ import ResourceForm from "./ResourceForm";
 import Profile from "./profile.component";
 
 function AppRoutes() {
-        console.log(process.env.REACT_APP_API_URL)
+        console.log(process.env.REACT_APP_TEST)
     return (
         <>
             <NavBar />
