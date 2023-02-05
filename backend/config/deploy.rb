@@ -79,10 +79,6 @@ namespace :deploy do
       upload! StringIO.new(File.read("config/database.yml")), "#{shared_path}/config/database.yml"
       upload! StringIO.new(File.read("config/master.key")), "#{shared_path}/config/master.key"
       upload! StringIO.new(File.read(".env")), "#{shared_path}/.env"
-
-      upload! StringIO.new(File.read("config/server.crt")), "#{shared_path}/config/server.crt"
-      upload! StringIO.new(File.read("config/server.csr")), "#{shared_path}/config/server.csr"
-      upload! StringIO.new(File.read("config/server.key")), "#{shared_path}/config/server.key"
     end
   end
 
