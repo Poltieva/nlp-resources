@@ -7,6 +7,7 @@ import { isEmail } from "validator";
 import { connect } from "react-redux";
 import { register } from "../actions/auth";
 import { Navigate } from "react-router-dom";
+import {Link} from "@mui/material";
 
 const required = (value) => {
     if (!value) {
@@ -189,6 +190,7 @@ class Register extends Component {
                             }}
                         />
                     </Form>
+                    <Link to={"/login"}>Login</Link>
                 </div>
             </div>
         );
