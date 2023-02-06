@@ -37,11 +37,15 @@ function ResourceForm({type}) {
                         redirect('/login')
                     }
                     else {
-                        alert(response.data.errors)
+                        if (response.data.errors) {
+                            alert(response.data.errors)
+                        } else { alert(response) }
                     }
                 })
                 .catch((e) => {
-                    alert(e.response.data)
+                    if (e.response.data) {
+                        alert(e.response.data)
+                    } else { alert(e) }
                 });
         }
     }, [])
@@ -65,7 +69,9 @@ function ResourceForm({type}) {
                     }
                 })
                 .catch((error) => {
-                    alert(error.response.data.errors)
+                    if (error.response.data.errors) {
+                        alert(error.response.data.errors)
+                    } else { alert(error) }
                 });
         } else {
             arrOfVars.forEach((i) => {
@@ -79,7 +85,9 @@ function ResourceForm({type}) {
                     }
                 })
                 .catch((error) => {
-                    alert(error.response.data.errors)
+                    if (error.response.data.errors) {
+                        alert(error.response.data.errors)
+                    } else { alert(error) }
                 });
         }
     }
