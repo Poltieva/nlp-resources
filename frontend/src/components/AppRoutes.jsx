@@ -15,7 +15,7 @@ function AppRoutes() {
             <NavBar />
             <Routes>
                     <Route exact path="/" element={<Resources />} />
-                    <Route path="/about" element={<About />} />
+                    <Route exact path="/about" element={<About />} />
                     <Route exact path="/profile" element={<Profile />} />
                     <Route exact path="/login" element={
                             <Login />
@@ -23,11 +23,11 @@ function AppRoutes() {
                     <Route exact path="/signup" element={
                             <Register />
                     } />
-                    <Route exact path={"/update-resource/:id"} element={
-                            <ResourceForm />
+                    <Route exact path="/update-resource/:id" element={
+                            <ResourceForm type="update" />
                     } />
-                    <Route exact path={"/create-new-resource"} element={
-                            <ResourceForm />
+                    <Route exact path="/create-new-resource" element={
+                            <ResourceForm type="create" />
                     } />
             </Routes>
         </>

@@ -5,11 +5,10 @@ import { Alert, Button, Card, CardContent, Container, FormControl,
 import {useNavigate, useParams} from "react-router-dom";
 import UserService from "../services/user.service";
 
-function ResourceForm() {
+function ResourceForm({type}) {
     const isLoggedIn = store.getState().auth.isLoggedIn;
     const navigate = useNavigate()
     const [loading, setLoading] = useState(true);
-    const [errors, setErrors] = useState([]);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [url, setUrl] = useState('');
@@ -18,14 +17,13 @@ function ResourceForm() {
     const [keywords, setKeywords] = useState([]);
     const [medium, setMedium] = useState('');
     const resourceId = useParams().id
-    const path = window.location.pathname
     const arrOfVars = ['name', 'description', 'url', 'author', 'imageUrl', 'medium', 'keywords']
     const redirect = useNavigate()
 
     useEffect(() => {
         if (!isLoggedIn) { navigate('/login') }
 
-        if (path === "/create-new-resource") {
+        if (type === "create") {
             setLoading(false)
         } else {
             UserService.getResource(resourceId)
@@ -39,24 +37,21 @@ function ResourceForm() {
                         redirect('/login')
                     }
                     else {
-                        setErrors([])
-                        setErrors(response.data.errors)
+                        alert(response.data.errors)
                     }
                 })
                 .catch((e) => {
-                    setErrors([])
-                    setErrors(e.response.data)
+                    alert(e.response.data)
                 });
         }
     }, [])
 
     async function handleSubmit(event) {
         event.preventDefault();
-        setErrors([])
 
         let payload = {resource: {}};
 
-        if (path === "/create-new-resource") {
+        if (type === "create") {
             arrOfVars.forEach((i) => {
                 if (eval(i).length > 0) {
                     payload.resource[i.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)] = eval(i)
@@ -70,7 +65,7 @@ function ResourceForm() {
                     }
                 })
                 .catch((error) => {
-                    setErrors(error.response.data.errors)
+                    alert(error.response.data.errors)
                 });
         } else {
             arrOfVars.forEach((i) => {
@@ -84,26 +79,17 @@ function ResourceForm() {
                     }
                 })
                 .catch((error) => {
-                    setErrors(error.response.data.errors)
+                    alert(error.response.data.errors)
                 });
         }
     }
 
     return (
         <section className="container px-10 mx-auto">
-            <Container maxWidth="md">
+            <Container>
                 <Card sx={{boxShadow:1, maxWidth: 'md'}}>
                     <CardContent>
-                        <Container maxWidth="sm">
-                            {errors.length > 0 ?
-                                <Alert severity="error" aria-live="assertive">
-                                    {errors.map((error, index) => {
-                                        return <p key={`alert-${index}`}>
-                                            {error}
-                                        </p>
-                                    })}
-                                </Alert>
-                                : <></>}
+                        <div>
                             <form onSubmit={handleSubmit}>
                                 <FormGroup row={true} id="name-group" sx={{marginTop: "1em"}}>
                                     <FormControl fullWidth>
@@ -175,11 +161,11 @@ function ResourceForm() {
                                             variant="contained"
                                             color="primary"
                                             type="submit"
-                                            id="submit-button">{path === "/create-new-resource" ? "Create" : "Update"} this resource</Button>
+                                            id="submit-button">{type === "create" ? "Create" : "Update"} this resource</Button>
                                     </FormControl>
                                 </FormGroup>
                             </form>
-                        </Container>
+                        </div>
                     </CardContent>
                 </Card>
             </Container>
