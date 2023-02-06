@@ -1,7 +1,9 @@
 import {useEffect, useState} from "react";
 import store from "../store";
-import { Alert, Button, Card, CardContent, Container, FormControl,
-    FormGroup, Input, InputLabel, } from "@mui/material";
+import {
+    Button, Card, CardContent, Container, FormControl,
+    FormGroup, FormHelperText, Input, InputLabel, MenuItem, Select,
+} from "@mui/material";
 import {useNavigate, useParams} from "react-router-dom";
 import UserService from "../services/user.service";
 
@@ -92,88 +94,105 @@ function ResourceForm({type}) {
         }
     }
 
+    function Form() {
+        return (
+            <form onSubmit={handleSubmit}>
+                <FormGroup row={true} id="name-group" sx={{marginTop: "1em"}}>
+                    <FormControl fullWidth>
+                        <InputLabel htmlFor="name" id="name-label">Resource Name</InputLabel>
+                        <Input id="name" type="text" value={name}
+                               onChange={(e) => setName(e.target.value)}
+                        />
+                        <FormHelperText>Book title, course name etc.</FormHelperText>
+                    </FormControl>
+                </FormGroup>
+                <FormGroup row={true} id="description-group" sx={{marginTop: "1em"}}>
+                    <FormControl fullWidth>
+                        <InputLabel htmlFor="description" id="description-label">Description</InputLabel>
+                        <Input id="description" type="text" value={description}
+                               onChange={(e) => setDescription(e.target.value)}
+                        />
+                        <FormHelperText>Please, provide a helpful description as it is used by our recommendation algorithm</FormHelperText>
+                    </FormControl>
+                </FormGroup>
+                <FormGroup row={true} id="url-group" sx={{marginTop: "1em"}}>
+                    <FormControl fullWidth>
+                        <InputLabel htmlFor="url" id="url-label">URL</InputLabel>
+                        <Input id="url" type="text" value={url}
+                               onChange={(e) => setUrl(e.target.value)}
+                        />
+                        <FormHelperText>For copyright reasons we cannot provide resources themselves but you can put a url to them</FormHelperText>
+                    </FormControl>
+                </FormGroup>
+                <FormGroup row={true} id="author-group" sx={{marginTop: "1em"}}>
+                    <FormControl fullWidth>
+                        <InputLabel htmlFor="author" id="author-label">Author</InputLabel>
+                        <Input id="author" type="text" value={author}
+                               onChange={(e) => setAuthor(e.target.value)}
+                        />
+                    </FormControl>
+                </FormGroup>
+                <FormGroup row={true} id="imageUrl-group" sx={{marginTop: "1em"}}>
+                    <FormControl fullWidth>
+                        <InputLabel htmlFor="imageUrl" id="imageUrl-label">Image url</InputLabel>
+                        <Input id="imageUrl" type="text" value={imageUrl}
+                               onChange={(e) => setImageUrl(e.target.value)}
+                        />
+                        <FormHelperText>You can add a url for an image if it is publicly available</FormHelperText>
+                    </FormControl>
+                </FormGroup>
+                <FormGroup row={true} id="medium-group" sx={{marginTop: "1em"}}>
+                    <FormControl fullWidth>
+                        <InputLabel htmlFor="medium" id="medium-label">Medium</InputLabel>
+                        <Select id="medium" value={medium}
+                               onChange={(e) => setMedium(e.target.value)}
+                        >
+                            <MenuItem value={0}>book</MenuItem>
+                            <MenuItem value={1}>video</MenuItem>
+                            <MenuItem value={2}>course</MenuItem>
+                            <MenuItem value={3}>article</MenuItem>
+                            <MenuItem value={4}>podcast</MenuItem>
+                            <MenuItem value={5}>other</MenuItem>
+                        </Select>
+                    </FormControl>
+                </FormGroup>
+                {keywords.length > 0 && <FormGroup row={true} id="keywords-group" sx={{marginTop: "1em"}}>
+                    {
+                        keywords.map((keyword, index) => {
+                            return (
+                                <div key={index}>
+                                    <div key={index} className="inline-block mr-2 mb-1 rounded-full bg-red-300 py-1 px-3">
+                                        <p>{keyword}</p>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                    <p>Uneditable for now :(</p>
+                </FormGroup>
+                }
+                <FormGroup row={true} id="submit-group" sx={{marginTop: "1em"}}>
+                    <FormControl fullWidth>
+                        <Button
+                            disabled={loading}
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                            id="submit-button">{type === "create" ? "Create" : "Update"} this resource</Button>
+                    </FormControl>
+                </FormGroup>
+            </form>
+        )
+    }
+
     return (
         <section className="container px-10 mx-auto">
             <Container>
                 <Card sx={{boxShadow:1, maxWidth: 'md'}}>
                     <CardContent>
-                        <div>
-                            <form onSubmit={handleSubmit}>
-                                <FormGroup row={true} id="name-group" sx={{marginTop: "1em"}}>
-                                    <FormControl fullWidth>
-                                        <InputLabel htmlFor="name" id="name-label">Resource Name</InputLabel>
-                                        <Input id="name" type="text" value={name}
-                                               onChange={(e) => setName(e.target.value)}
-                                        />
-                                    </FormControl>
-                                </FormGroup>
-                                <FormGroup row={true} id="description-group" sx={{marginTop: "1em"}}>
-                                    <FormControl fullWidth>
-                                        <InputLabel htmlFor="description" id="description-label">Description</InputLabel>
-                                        <Input id="description" type="text" value={description}
-                                               onChange={(e) => setDescription(e.target.value)}
-                                        />
-                                    </FormControl>
-                                </FormGroup>
-                                <FormGroup row={true} id="url-group" sx={{marginTop: "1em"}}>
-                                    <FormControl fullWidth>
-                                        <InputLabel htmlFor="url" id="url-label">URL</InputLabel>
-                                        <Input id="url" type="text" value={url}
-                                               onChange={(e) => setUrl(e.target.value)}
-                                        />
-                                    </FormControl>
-                                </FormGroup>
-                                <FormGroup row={true} id="author-group" sx={{marginTop: "1em"}}>
-                                    <FormControl fullWidth>
-                                        <InputLabel htmlFor="author" id="author-label">Author</InputLabel>
-                                        <Input id="author" type="text" value={author}
-                                               onChange={(e) => setAuthor(e.target.value)}
-                                        />
-                                    </FormControl>
-                                </FormGroup>
-                                <FormGroup row={true} id="imageUrl-group" sx={{marginTop: "1em"}}>
-                                    <FormControl fullWidth>
-                                        <InputLabel htmlFor="imageUrl" id="imageUrl-label">Image url</InputLabel>
-                                        <Input id="imageUrl" type="text" value={imageUrl}
-                                               onChange={(e) => setImageUrl(e.target.value)}
-                                        />
-                                    </FormControl>
-                                </FormGroup>
-                                <FormGroup row={true} id="medium-group" sx={{marginTop: "1em"}}>
-                                    <FormControl fullWidth>
-                                        <InputLabel htmlFor="medium" id="medium-label">Medium</InputLabel>
-                                        <Input id="medium" type="text" value={medium}
-                                               onChange={(e) => setMedium(e.target.value)}
-                                        />
-                                    </FormControl>
-                                </FormGroup>
-                                {keywords.length > 0 && <FormGroup row={true} id="keywords-group" sx={{marginTop: "1em"}}>
-                                        {
-                                            keywords.map((keyword, index) => {
-                                                return (
-                                                    <div key={index}>
-                                                        <div key={index} className="inline-block mr-2 mb-1 rounded-full bg-red-300 py-1 px-3">
-                                                            <p>{keyword}</p>
-                                                        </div>
-                                                    </div>
-                                                )
-                                            })
-                                        }
-                                        <p>Uneditable for now :(</p>
-                                    </FormGroup>
-                                }
-                                <FormGroup row={true} id="submit-group" sx={{marginTop: "1em"}}>
-                                    <FormControl fullWidth>
-                                        <Button
-                                            disabled={loading}
-                                            variant="contained"
-                                            color="primary"
-                                            type="submit"
-                                            id="submit-button">{type === "create" ? "Create" : "Update"} this resource</Button>
-                                    </FormControl>
-                                </FormGroup>
-                            </form>
-                        </div>
+                        <Container maxWidth="sm">
+                            <Form />
+                        </Container>
                     </CardContent>
                 </Card>
             </Container>
