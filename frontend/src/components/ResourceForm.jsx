@@ -18,7 +18,7 @@ function ResourceForm({type}) {
     const [url, setUrl] = useState('');
     const [author, setAuthor] = useState('');
     const [imageUrl, setImageUrl] = useState('');
-    const [keywords, setKeywords] = useState([]);
+    const [keywords, setKeywords] = useState(['one', 'two', 'three']);
     const [medium, setMedium] = useState('');
     const resourceId = useParams().id
     const arrOfVars = ['name', 'description', 'url', 'author', 'imageUrl', 'medium', 'keywords']
@@ -56,7 +56,7 @@ function ResourceForm({type}) {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        alert(medium)
+        alert(keywords)
 
         // let payload = {resource: {}};
         //
@@ -110,7 +110,7 @@ function ResourceForm({type}) {
                                 <AuthorFormGroup author={author} callback={setAuthor} />
                                 <ImageUrlFormGroup imageUrl={imageUrl} callback={setImageUrl} />
                                 <MediumFormGroup medium={medium} callback={setMedium} />
-                                <KeywordsFormGroup keywords={keywords} callback={setKeywords} />
+                                <KeywordsFormGroup keywords={keywords} callback={setKeywords} type={type} />
                                 <ButtonFormGroup loading={loading} type={type} />
                             </form>
                         </Container>

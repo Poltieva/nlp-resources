@@ -89,24 +89,32 @@ function MediumFormGroup({medium, callback}) {
     )
 }
 
-function KeywordsFormGroup({keywords, callback}) {
+
+function KeywordsFormGroup({keywords, callback, type}) {
     return(
         <FormGroup row={true} id="keywords-group" sx={{marginTop: "1em"}}>
-            { keywords.length > 0 ? <div>
+            <div>
                 {
                     keywords.map((keyword, index) => {
                         return (
-                            <div key={index}>
+                            <div key={index} id={`keyword-${index}`}>
                                 <div key={index} className="inline-block mr-2 mb-1 rounded-full bg-red-300 py-1 px-3">
                                     <p>{keyword}</p>
                                 </div>
+                                <Button onClick={() => {
+                                    keywords = keywords.filter(function(item) {
+                                        return item !== keyword
+                                    })
+                                    callback(keywords)
+                                }}>
+                                    Delete
+                                </Button>
                             </div>
                         )
                     })
                 }
                 <p>Uneditable for now :(</p>
-            </div> : <></>
-            }
+            </div>
         </FormGroup>
     )
 }
