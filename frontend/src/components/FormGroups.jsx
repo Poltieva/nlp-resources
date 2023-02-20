@@ -1,4 +1,5 @@
 import {Button, FormControl, FormGroup, FormHelperText, Input, InputLabel, MenuItem, Select} from "@mui/material";
+import {useState} from "react";
 
 function NameFormGroup({name, callback}) {
     return(
@@ -89,31 +90,71 @@ function MediumFormGroup({medium, callback}) {
     )
 }
 
+function Keywords({keywords, callback}) {
+    return(
+        <div>
+            {
+                keywords.map((keyword, index) => {
+                    return (
+                        <div key={index} id={`keyword-${index}`}>
+                            <div key={index} className="inline-block mr-2 mb-1 rounded-full bg-red-300 py-1 px-3">
+                                <p>{keyword}</p>
+                            </div>
+                            <Button onClick={() => {
+                                keywords = keywords.filter(function(item) {
+                                    return item !== keyword
+                                })
+                                callback(keywords)
+                            }}>
+                                Delete
+                            </Button>
+                        </div>
+                    )
+                })
+            }
+        </div>
+    )
+}
+
+function KeywordInput({keywords, callback}) {
+    const [keyword, setKeyword] = useState('')
+    function handleAddKeyword(keyword, keywords, callback) {
+        callback([...keywords, keyword])
+    }
+
+    return(
+        <div>
+            <InputLabel htmlFor="keyword">New keyword</InputLabel>
+            <Input id="keyword" type="text" value={keyword}
+                   onChange={(e) => setKeyword(e.target.value)}
+            />
+            <Button onClick={() => handleAddKeyword(keyword, keywords, callback)}>Add keyword</Button>
+        </div>
+    )
+}
+function AddKeywords({keywords, callback, type}) {
+
+    function handleAdd() {
+        return <KeywordInput keywords={keywords} callback={callback} />
+    }
+
+    return(
+        <div>
+            {type === "update" &&
+                    <div>
+                        <Button onClick={() => handleAdd()}>+</Button>
+                    </div>
+            }
+        </div>
+    )
+}
 
 function KeywordsFormGroup({keywords, callback, type}) {
     return(
         <FormGroup row={true} id="keywords-group" sx={{marginTop: "1em"}}>
             <div>
-                {
-                    keywords.map((keyword, index) => {
-                        return (
-                            <div key={index} id={`keyword-${index}`}>
-                                <div key={index} className="inline-block mr-2 mb-1 rounded-full bg-red-300 py-1 px-3">
-                                    <p>{keyword}</p>
-                                </div>
-                                <Button onClick={() => {
-                                    keywords = keywords.filter(function(item) {
-                                        return item !== keyword
-                                    })
-                                    callback(keywords)
-                                }}>
-                                    Delete
-                                </Button>
-                            </div>
-                        )
-                    })
-                }
-                <p>Uneditable for now :(</p>
+                <Keywords keywords={keywords} callback={callback} />
+                <AddKeywords type={type} />
             </div>
         </FormGroup>
     )
