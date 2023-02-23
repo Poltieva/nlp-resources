@@ -1,9 +1,11 @@
 FROM node:alpine
 
-WORKDIR /app
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-COPY ./frontend/package*.json ./
-COPY ./frontend ./
+COPY ./frontend /usr/src/app
+COPY ./frontend/package*.json /usr/src/app
+COPY ./frontend/yarn.lock /usr/src/app
 
 RUN yarn install
 
