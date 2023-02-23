@@ -2,7 +2,8 @@ import {useEffect, useState} from "react";
 import store from "../store";
 import {
     ButtonFormGroup, AuthorFormGroup, DescriptionFormGroup,
-    KeywordsFormGroup, ImageUrlFormGroup, NameFormGroup,
+    KeywordsFormGroup, 
+    ImageUrlFormGroup, NameFormGroup,
     UrlFormGroup, MediumFormGroup
 } from "./FormGroups"
 import { Card, CardContent, Container } from "@mui/material";
@@ -56,29 +57,27 @@ function ResourceForm({type}) {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        alert(keywords)
 
-        // let payload = {resource: {}};
-        //
-        // if (type === "create") {
-        //     arrOfVars.forEach((i) => {
-        //         if (eval(i).length > 0) {
-        //             payload.resource[i.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)] = eval(i)
-        //         }
-        //     })
-        //     UserService
-        //         .postNewResource(payload)
-        //         .then((response) => {
-        //             if (response.status === 201) {
-        //                 navigate('/')
-        //             }
-        //         })
-        //         .catch((error) => {
-        //             if (error.response.data.errors) {
-        //                 alert(error.response.data.errors)
-        //             } else { alert(error) }
-        //         });
-        // } else {
+        let payload = {resource: {}};
+        if (type === "create") {
+            arrOfVars.forEach((i) => {
+                if (eval(i).toString().length > 0) {
+                    payload.resource[i.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)] = eval(i)
+                }
+            })
+            UserService
+                .postNewResource(payload)
+                .then((response) => {
+                    if (response.status === 201) {
+                        navigate('/')
+                    }
+                })
+                .catch((error) => {
+                    if (error.response.data.errors) {
+                        alert(error.response.data.errors)
+                    } else { alert(error) }
+                });
+        } //else {
         //     arrOfVars.forEach((i) => {
         //         payload.resource[i.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)] = eval(i)
         //     })
