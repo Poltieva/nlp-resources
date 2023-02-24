@@ -77,23 +77,23 @@ function ResourceForm({type}) {
                         alert(error.response.data.errors)
                     } else { alert(error) }
                 });
-        } //else {
-        //     arrOfVars.forEach((i) => {
-        //         payload.resource[i.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)] = eval(i)
-        //     })
-        //     UserService
-        //         .updateResource(resourceId, payload)
-        //         .then((response) => {
-        //             if (response.status === 200) {
-        //                 navigate('/')
-        //             }
-        //         })
-        //         .catch((error) => {
-        //             if (error.response.data.errors) {
-        //                 alert(error.response.data.errors)
-        //             } else { alert(error) }
-        //         });
-        // }
+        } else {
+            arrOfVars.forEach((i) => {
+                payload.resource[i.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)] = eval(i)
+            })
+            UserService
+                .updateResource(resourceId, payload)
+                .then((response) => {
+                    if (response.status === 200) {
+                        navigate('/')
+                    }
+                })
+                .catch((error) => {
+                    if (error.response.data.errors) {
+                        alert(error.response.data.errors)
+                    } else { alert(error) }
+                });
+        }
     }
 
     return (
