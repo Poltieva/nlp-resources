@@ -9,6 +9,7 @@ import {
 import { Card, CardContent, Container } from "@mui/material";
 import {useNavigate, useParams} from "react-router-dom";
 import UserService from "../services/user.service";
+import {toSnakeCase, toCamelCase} from "../helpers/helpers";
 
 function ResourceForm({type}) {
     const isLoggedIn = store.getState().auth.isLoggedIn;
@@ -19,7 +20,7 @@ function ResourceForm({type}) {
     const [url, setUrl] = useState('');
     const [author, setAuthor] = useState('');
     const [imageUrl, setImageUrl] = useState('');
-    const [keywords, setKeywords] = useState(['one', 'two', 'three']);
+    const [keywords, setKeywords] = useState([]);
     const [medium, setMedium] = useState('');
     const resourceId = useParams().id
     const arrOfVars = ['name', 'description', 'url', 'author', 'imageUrl', 'medium', 'keywords']
@@ -35,7 +36,7 @@ function ResourceForm({type}) {
                 .then((response) => {
                     if (response.status === 200) {
                         arrOfVars.forEach((value) => {
-                            eval(`set${value[0].toUpperCase() + value.substr(1)}(response.data.${value.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)})`)
+                            eval(`set${toCamelCase(value)}(response.data.${toSnakeCase(value)})`)
                         })
                         setLoading(false)
                     } else if (response.status === 401) {
@@ -62,7 +63,7 @@ function ResourceForm({type}) {
         if (type === "create") {
             arrOfVars.forEach((i) => {
                 if (eval(i).toString().length > 0) {
-                    payload.resource[i.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)] = eval(i)
+                    payload.resource[toSnakeCase(i)] = eval(i)
                 }
             })
             UserService
@@ -79,7 +80,7 @@ function ResourceForm({type}) {
                 });
         } else {
             arrOfVars.forEach((i) => {
-                payload.resource[i.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)] = eval(i)
+                payload.resource[toSnakeCase(i)] = eval(i)
             })
             UserService
                 .updateResource(resourceId, payload)
