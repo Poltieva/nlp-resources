@@ -55,7 +55,7 @@ class Resource extends Component {
 
                 {this.props.user && <div>
                     <a className="px-6 py-3 text-black no-underline bg-blue-200 rounded"
-                       href={`/update-resource/${resource.id}`}>Edit</a>
+                       href={`#/update-resource/${resource.id}`}>Edit</a>
                     <button
                         onClick={(e) => handleDelete(`${process.env.REACT_APP_API_URL}/resources/${resource.id}`)}
                         rel="nofollow" className="px-6 mx-5 py-3 text-white no-underline bg-red-500 rounded"
