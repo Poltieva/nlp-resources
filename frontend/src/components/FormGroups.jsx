@@ -118,10 +118,11 @@ function Keywords({keywords, callback}) {
     )
 }
 
-function KeywordInput({keywords, callback}) {
+function KeywordInput({keywordInputs, setKeywordInputs, keywords, callback}) {
     const [keyword, setKeyword] = useState('')
-    function handleAddKeyword(keyword, keywords, callback) {
+    function handleAddKeyword(keyword) {
         callback([...keywords, keyword])
+        setKeywordInputs(keywordInputs-1)
     }
 
     return(
@@ -130,23 +131,28 @@ function KeywordInput({keywords, callback}) {
             <Input id="keyword" type="text" value={keyword}
                    onChange={(e) => setKeyword(e.target.value)}
             />
-            <Button onClick={() => handleAddKeyword(keyword, keywords, callback)}>Add keyword</Button>
+            <Button onClick={() => handleAddKeyword(keyword)}>Add keyword</Button>
         </div>
     )
 }
-function AddKeywords({keywords, callback, type}) {
-
+function AddKeywords({keywords, callback}) {
+    const [keywordInputs, setKeywordInputs] = useState(0)
     function handleAdd() {
-        return <KeywordInput keywords={keywords} callback={callback} />
+        setKeywordInputs(keywordInputs+1)
+    }
+    function handleRemoveKeywordInput() {
+        setKeywordInputs(keywordInputs-1)
     }
 
     return(
         <div>
-            {type === "update" &&
-                    <div>
-                        <Button onClick={() => handleAdd()}>+</Button>
-                    </div>
-            }
+            {Array(keywordInputs).fill(0).map((_, i) => (
+                <KeywordInput key={i} keywordInputs={keywordInputs} setKeywordInputs={setKeywordInputs} keywords={keywords} callback={callback} />
+            ))}
+            {keywordInputs > 0 && <Button onClick={() => handleRemoveKeywordInput()}>Cancel</Button>}
+            <div>
+                <Button onClick={() => handleAdd()}>+</Button>
+            </div>
         </div>
     )
 }
@@ -156,7 +162,7 @@ function KeywordsFormGroup({keywords, callback, type}) {
         <FormGroup row={true} id="keywords-group" sx={{marginTop: "1em"}}>
             <div>
                 <Keywords keywords={keywords} callback={callback} />
-                <AddKeywords type={type} />
+                <AddKeywords keywords={keywords} callback={callback} />
             </div>
         </FormGroup>
     )

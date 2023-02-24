@@ -9,7 +9,7 @@ import {
 import { Card, CardContent, Container } from "@mui/material";
 import {useNavigate, useParams} from "react-router-dom";
 import UserService from "../services/user.service";
-//TODO add ability to create keywords
+
 function ResourceForm({type}) {
     const isLoggedIn = store.getState().auth.isLoggedIn;
     const navigate = useNavigate()
