@@ -71,11 +71,13 @@ function ImageUrlFormGroup({imageUrl, callback}) {
 }
 
 function MediumFormGroup({medium, callback}) {
+    const mediumMapping = {book: 0, video: 1, course: 2, article: 3, podcast: 4, other: 5}
+    const mediumValue = mediumMapping[medium] === undefined ? '' : mediumMapping[medium]
     return(
         <FormGroup row={true} id="medium-group" sx={{marginTop: "1em"}}>
             <FormControl fullWidth>
                 <InputLabel htmlFor="medium" id="medium-label">Medium</InputLabel>
-                <Select id="medium" value={medium}
+                <Select id="medium" value={mediumValue}
                         onChange={(e) => callback(e.target.value)}
                 >
                     <MenuItem value={0}>book</MenuItem>
