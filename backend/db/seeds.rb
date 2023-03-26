@@ -9,9 +9,9 @@ else
   
   if User.all.empty?
     User.create!(email: 'poltyeva.anna@gmail.com', password: '123456', username: 'apolti')
-    # 5.times do
-    #   User.create!(email: Faker::Internet.email, password: Faker::Internet.password, username: Faker::Internet.username)
-    # end
+    5.times do
+      User.create!(email: Faker::Internet.email, password: Faker::Name.name)
+    end
   end
   if Resource.all.empty?
     10.times do
@@ -23,7 +23,7 @@ else
         author: Faker::Name.name,
         keywords: %w[spaCy nltk English language pandas].sample(2),
         image_url: Faker::LoremFlickr.image,
-        user_id: User.first.id
+        user_id: User.all.sample.id
       )
     end
   end
