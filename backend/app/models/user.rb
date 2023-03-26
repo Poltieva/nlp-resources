@@ -13,6 +13,8 @@ class User < ApplicationRecord
   # rubocop:enable Rails/UniqueValidationWithoutIndex:
   validates :email, format: URI::MailTo::EMAIL_REGEXP
 
+  has_many :resources
+
   def self.authenticate(email, password)
     user = User.find_for_authentication(email:)
     user&.valid_password?(password) ? user : nil
