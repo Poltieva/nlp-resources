@@ -13,6 +13,7 @@ import {toSnakeCase, toCamelCase} from "../helpers/helpers";
 
 function ResourceForm({type}) {
     const isLoggedIn = store.getState().auth.isLoggedIn;
+    const userId = store.getState().auth.user.id;
     const navigate = useNavigate()
     const [loading, setLoading] = useState(true);
     const [name, setName] = useState('');
@@ -60,12 +61,14 @@ function ResourceForm({type}) {
         event.preventDefault();
 
         let payload = {resource: {}};
+        arrOfVars.forEach((i) => {
+            if (eval(i).toString().length > 0) {
+                payload.resource[toSnakeCase(i)] = eval(i)
+            }
+        })
+        payload.user_id = userId
         if (type === "create") {
-            arrOfVars.forEach((i) => {
-                if (eval(i).toString().length > 0) {
-                    payload.resource[toSnakeCase(i)] = eval(i)
-                }
-            })
+            
             UserService
                 .postNewResource(payload)
                 .then((response) => {
@@ -79,9 +82,6 @@ function ResourceForm({type}) {
                     } else { alert(error) }
                 });
         } else {
-            arrOfVars.forEach((i) => {
-                payload.resource[toSnakeCase(i)] = eval(i)
-            })
             UserService
                 .updateResource(resourceId, payload)
                 .then((response) => {

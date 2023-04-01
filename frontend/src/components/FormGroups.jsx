@@ -87,6 +87,7 @@ function MediumFormGroup({medium, callback}) {
                     <MenuItem value={4}>podcast</MenuItem>
                     <MenuItem value={5}>other</MenuItem>
                 </Select>
+                <FormHelperText>I know that it doesn't show up but it's there. I just don't know how to fix visibility</FormHelperText>
             </FormControl>
         </FormGroup>
     )
