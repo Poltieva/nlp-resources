@@ -17,4 +17,6 @@ class Resource < ApplicationRecord
   after_initialize do |r|
     r.keywords = [] if r.keywords.nil?
   end
+
+  belongs_to :user
 end

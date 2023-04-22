@@ -8,7 +8,7 @@ module Api
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
       def index
-        render json: Resource.last(10).sort_by{|r| r.updated_at }.reverse, except: %i[created_at updated_at]
+        render json: Resource.last(10).joins(:user).select('resources.*, users.username, users.email').sort_by{|r| r.updated_at }.reverse, except: %i[user_id created_at updated_at]
       end
 
       def show

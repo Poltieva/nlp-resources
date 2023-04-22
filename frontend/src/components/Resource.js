@@ -38,7 +38,8 @@ class Resource extends Component {
             </div>,
             description: <Fragment key="description"><p>Description:</p>
                 <p className="px-5">{resource.description}</p></Fragment>,
-            url: <p key="url">Url: {resource.url}</p>
+            url: <p key="url">Url: {resource.url}</p>,
+            user_name: <Fragment key="user_name"><p>Added by: {resource.username}</p></Fragment>
         }
 
         return (
