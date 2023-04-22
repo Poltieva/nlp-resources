@@ -8,8 +8,7 @@ module Api
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
       def index
-        logger.info request.headers['Authorization']
-        render json: Resource.all, except: %i[created_at updated_at]
+        render json: Resource.last(10).sort_by{|r| r.updated_at }.reverse, except: %i[created_at updated_at]
       end
 
       def show
