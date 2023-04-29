@@ -16,7 +16,7 @@ def encode_query(model, query, tags = []):
     return query_embedding
 
 def load_embeddings():
-    in_path = './db/embeddings.pkl'
+    in_path = '../db/embeddings.pkl'
 
     books_data = []
     with open(in_path, 'rb') as f:
@@ -41,7 +41,6 @@ def main(model, query, tags = []):
     scores = cosine_similarities(query_embedding, DB_embeddings)
     top_k_indices = tf.math.top_k(scores, 10)[1].numpy().squeeze().tolist()
 
-    # create list of tuples containing ID and embedding
     candidates = [list(DB_data[i].keys())[0] for i in top_k_indices]
 
     return candidates

@@ -20,6 +20,7 @@ module Api
         if @resource.save
           render json: { message: "Successfully created a resource ##{@resource.id}" },
                  status: :created
+          embeddings_service.dump(@resource)
         else
           render json: { errors: @resource.errors.full_messages }, status: :unprocessable_entity
         end
@@ -28,6 +29,7 @@ module Api
       def update
         if @resource.update(resource_params)
           render json: { notice: 'Resource was successfully updated' }, status: :ok
+          embeddings_service.dump(@resource)
         else
           render json: { errors: @resource.errors.full_messages }, status: :unprocessable_entity
         end
