@@ -38,6 +38,9 @@ class NavBar extends Component {
                     <NavLink to="/" className="nav-link" onClick={this.clickHandler}>
                         Home
                     </NavLink>
+                    <NavLink to="/recommend" className="nav-link" onClick={this.clickHandler}>
+                        Recommendations
+                    </NavLink>
                     <NavLink to="/about" className="nav-link" onClick={this.clickHandler}>
                         About
                     </NavLink>

@@ -1,6 +1,6 @@
 import {Route, Routes} from 'react-router-dom';
 import Resources from './Resources';
-import ResourceSearch from './ResourceSearch';
+import ResourceRecommendation from './ResourceRecommendation';
 import About from './About';
 import NavBar from "./NavBar";
 import Login from "./login.component";
@@ -9,13 +9,12 @@ import ResourceForm from "./ResourceForm";
 import Profile from "./profile.component";
 
 function AppRoutes() {
-        console.log(process.env.REACT_APP_CLIENT_ID)
     return (
         <>
             <NavBar />
             <Routes>
                     <Route exact path="/" element={<Resources />} />
-                    <Route exact path="/recommend" element={<ResourceSearch />} />
+                    <Route exact path="/recommend" element={<ResourceRecommendation />} />
                     <Route exact path="/about" element={<About />} />
                     <Route exact path="/profile" element={<Profile />} />
                     <Route exact path="/login" element={
