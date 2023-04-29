@@ -1,9 +1,8 @@
 import {useState} from "react";
 import Resource from "./Resource";
-import ResourceSearch from './ResourceSearch';
 import instance from './api/axios';
 
-function ResourceRecommendation() {
+function ResourceSearch() {
   const [searchTerm, setSearchTerm] = useState('');
   const [recommendations, setRecommendations] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -12,10 +11,11 @@ function ResourceRecommendation() {
   const handleSearch = async () => {
     setIsLoading(true);
     try {
-      const response = await instance.get(`/recommend?query=${searchTerm}`);
+      const response = await instance.get(`/search?query=${searchTerm}`);
       const data = response.data;
-      setRecommendations(data.recommendations);
-      if (recommendations.length === 0) {
+      console.log(data)
+      setRecommendations(data.result);
+      if (data.result.length === 0) {
         setMessage("Nothing found");
       }
     } catch (error) {
@@ -26,10 +26,9 @@ function ResourceRecommendation() {
 
   return (
     <div>
-      <ResourceSearch />
       <div>
         <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-        <button onClick={handleSearch}>Recommend</button>
+        <button onClick={handleSearch}>Search</button>
         {isLoading ? (
           <p>Please wait a bit...</p>
         ) : (
@@ -45,4 +44,4 @@ function ResourceRecommendation() {
   );
 };
 
-export default ResourceRecommendation;
+export default ResourceSearch;

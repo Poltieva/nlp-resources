@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       devise_for :users, controllers: { registrations: 'api/v1/users/registrations' }
       resources :resources, except: %i[edit new]
       get '/recommend', to: 'resources#recommend'
+      get 'search', to: 'resources#search'
     end
   end
 

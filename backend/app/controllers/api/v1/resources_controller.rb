@@ -42,6 +42,12 @@ module Api
         render json: {recommendations: result.joins(:user).select('resources.*, users.username, users.email')}
       end
 
+      def search
+        result = Resource.where("lower(name) LIKE ?", "%#{params[:query].split(' ').join('%').downcase}%")
+
+        render json: {result: result.joins(:user).select('resources.*, users.username, users.email')}
+      end
+
       private
 
       def embeddings_service
