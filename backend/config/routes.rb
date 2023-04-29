@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       devise_for :users, controllers: { registrations: 'api/v1/users/registrations' }
       resources :resources, except: %i[edit new]
+      get '/recommend', to: 'resources#recommend'
     end
   end
 

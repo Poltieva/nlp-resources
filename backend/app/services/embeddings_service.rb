@@ -10,6 +10,6 @@ class EmbeddingsService
 
   def fetch_candidates_for(query)
     output = `python3 ../embeddings/encode_query.py #{query}`
-    # eval output
+    Resource.where(id: eval(output))
   end
 end

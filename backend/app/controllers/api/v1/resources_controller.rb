@@ -3,12 +3,12 @@
 module Api
   module V1
     class ResourcesController < ApplicationController
-      skip_before_action :doorkeeper_authorize!, only: %i[index]
+      # skip_before_action :doorkeeper_authorize!, only: %i[index, recommend]
       before_action :find_resource, only: %i[update]
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
       def index
-        render json: Resource.last(10).joins(:user).select('resources.*, users.username, users.email').sort_by{|r| r.updated_at }.reverse, except: %i[user_id created_at updated_at]
+        render json: Resource.joins(:user).select('resources.*, users.username, users.email').order(created_at: :desc).first(10), except: %i[user_id created_at updated_at]
       end
 
       def show
@@ -35,7 +35,18 @@ module Api
 
       def destroy; end
 
+      def recommend
+        query = params[:query]
+        result = embeddings_service.fetch_candidates_for(query)
+
+        render json: {recommendations: result.joins(:user).select('resources.*, users.username, users.email')}
+      end
+
       private
+
+      def embeddings_service
+        @embeddings_service ||= EmbeddingsService.new
+      end
 
       def not_found(exception)
         render json: { errors: exception.full_message }, status: :not_found

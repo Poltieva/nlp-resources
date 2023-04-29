@@ -2,7 +2,7 @@
 
 class ApplicationController < ActionController::API
   wrap_parameters false
-  before_action :doorkeeper_authorize!
+  # before_action :doorkeeper_authorize!
   respond_to :json
 
   before_action :configure_permitted_parameters, if: :devise_controller?
