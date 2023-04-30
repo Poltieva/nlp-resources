@@ -16,20 +16,21 @@ module Api
       end
 
       def create
-        @resource = Resource.create(resource_params)
+        @resource = Resource.create(resource_params.merge({user_id: params[:user_id]}))
         if @resource.save
           render json: { message: "Successfully created a resource ##{@resource.id}" },
                  status: :created
-          embeddings_service.dump(@resource)
+          embeddings_service.dump(@resource) unless @resource.description&.empty?
         else
           render json: { errors: @resource.errors.full_messages }, status: :unprocessable_entity
         end
       end
 
       def update
+        desciption_changed = @resource.description == resource_params[:description] ? false : true
         if @resource.update(resource_params)
           render json: { notice: 'Resource was successfully updated' }, status: :ok
-          embeddings_service.dump(@resource)
+          embeddings_service.update_embedding(@resource) if desciption_changed
         else
           render json: { errors: @resource.errors.full_messages }, status: :unprocessable_entity
         end
@@ -62,7 +63,7 @@ module Api
 
       def resource_params
         params.require(:resource).permit(:name, :description, :url, :author, :image_url, :medium,
-                                         keywords: [])
+                                         keywords: [])  
       end
 
       def find_resource
