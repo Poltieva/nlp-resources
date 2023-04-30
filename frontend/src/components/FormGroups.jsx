@@ -20,7 +20,7 @@ function DescriptionFormGroup({description, callback}) {
         <FormGroup row={true} id="description-group" sx={{marginTop: "1em"}}>
             <FormControl fullWidth>
                 <InputLabel htmlFor="description" id="description-label">Description</InputLabel>
-                <Input id="description" type="text" value={description}
+                <Input id="description" type="text" value={description} multiline rows={7}
                        onChange={(e) => callback(e.target.value)}
                 />
                 <FormHelperText>Please, provide a helpful description as it is used by our recommendation algorithm</FormHelperText>
