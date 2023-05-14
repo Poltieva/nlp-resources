@@ -9,7 +9,7 @@ def main(model, id):
         if id in dict.keys():
             dict[id] = model.encode(open(f'./tmp/{id}.description.txt', 'r').read())
             break
-    with open('book_embeddings.pkl', 'wb') as f:
+    with open('../shared/embeddings.pkl', 'wb') as f:
         pickle.dump(embeddings, f)
     
 

@@ -18,7 +18,7 @@ def main(id):
     # embedding = np.concatenate([description_embeddings, tags_embeddings], axis=0)
     # concatenating to obtain a single vector
     
-    with open('./db/embeddings.pkl', 'ab') as f:
+    with open('../shared/embeddings.pkl', 'ab') as f:
         # pickle_dump({id: embedding}, f)
         pickle_dump({id: description_embeddings}, f)
 
