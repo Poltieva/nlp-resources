@@ -2,6 +2,7 @@ import {useState} from "react";
 import Resource from "./Resource";
 import ResourceSearch from './ResourceSearch';
 import instance from './api/axios';
+import { Button, Container, TextField } from "@mui/material";
 
 function ResourceRecommendation() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -25,11 +26,13 @@ function ResourceRecommendation() {
   };
 
   return (
-    <div>
+    <Container>
       <ResourceSearch />
       <div>
-        <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-        <button onClick={handleSearch}>Recommend</button>
+        <TextField label="Recommend me a book/course video about..."
+        variant="outlined" fullWidth margin="dense"
+        value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+        <Button disabled={isLoading} onClick={handleSearch}>Recommend</Button>
         {isLoading ? (
           <p>Please wait a bit...</p>
         ) : (
@@ -41,7 +44,7 @@ function ResourceRecommendation() {
           </ul>
         )}
       </div>
-  </div>
+  </Container>
   );
 };
 

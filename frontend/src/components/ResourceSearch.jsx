@@ -1,6 +1,7 @@
 import {useState} from "react";
 import Resource from "./Resource";
 import instance from './api/axios';
+import { TextField, Button } from "@mui/material";
 
 function ResourceSearch() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -27,8 +28,9 @@ function ResourceSearch() {
   return (
     <div>
       <div>
-        <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-        <button onClick={handleSearch}>Search</button>
+        <TextField label="chatbot python" variant="outlined" size="small" disabled={isLoading}
+        value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+        <Button onClick={handleSearch}>Search</Button>
         {isLoading ? (
           <p>Please wait a bit...</p>
         ) : (
