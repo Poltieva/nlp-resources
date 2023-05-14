@@ -12,6 +12,10 @@ function About () {
                 <p>Any registered user can add resources.</p>
                 <Typography variant="h5" component={"h2"}>Can I contribute to the app development?</Typography>
                 <p>Yes, the repo is https://github.com/Poltieva/nlp-resources</p>
+                <Typography variant="h5" component={"h2"}>I can't delete a resource!</Typography>
+                <p>This app is still in development, so resource deletion is disabled.</p>
+                <Typography variant="h5" component={"h2"}>I can't create/update a resource!</Typography>
+                <p>There's a know issue with token expiration. Try loging out and back in.</p>
                 <Typography variant="h5" component={"h2"}>I found a bug!</Typography>
                 <p>Please, report it here: https://github.com/Poltieva/nlp-resources/issues
                 if it is not there already.</p>
