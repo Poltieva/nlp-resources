@@ -79,24 +79,12 @@ namespace :deploy do
       upload! StringIO.new(File.read("config/database.yml")), "#{shared_path}/config/database.yml"
       upload! StringIO.new(File.read("config/master.key")), "#{shared_path}/config/master.key"
       upload! StringIO.new(File.read(".env")), "#{shared_path}/.env"
-      upload! StringIO.new(File.read("db/embeddings.pkl")), "#{shared_path}/embeddings.pkl"
-    end
-  end
-
-  desc 'Seed db with frontend keys'
-  task :seed_with_frontend_keys do
-    on roles(:db) do
-      within release_path do
-        with rails_env: fetch(:rails_env) do
-          execute :rake, "db:seed"
-        end
-      end
+      upload! StringIO.new(File.read("db/development.sqlite3")), "#{shared_path}/production.sqlite3"
     end
   end
 
   before :starting,     :check_revision
   before 'deploy:starting', :upload_yml
-  after 'deploy:migrating', :seed_with_frontend_keys
   after  :finishing,    :cleanup
   after  :finishing,    :restart
 end
