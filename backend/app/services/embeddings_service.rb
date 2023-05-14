@@ -17,7 +17,6 @@ class EmbeddingsService
 
   def fetch_candidates_for(query)
     output = `python3 ./app/embeddings/encode_query.py #{query.gsub(/[()]/, '')}`
-    binding.pry
     Resource.where(id: eval(output))
   end
 end
