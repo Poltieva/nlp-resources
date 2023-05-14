@@ -79,7 +79,6 @@ namespace :deploy do
       upload! StringIO.new(File.read("config/database.yml")), "#{shared_path}/config/database.yml"
       upload! StringIO.new(File.read("config/master.key")), "#{shared_path}/config/master.key"
       upload! StringIO.new(File.read(".env")), "#{shared_path}/.env"
-      upload! StringIO.new(File.read("db/development.sqlite3")), "#{shared_path}/production.sqlite3"
     end
   end
 
