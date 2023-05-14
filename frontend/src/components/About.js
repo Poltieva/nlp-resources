@@ -5,6 +5,8 @@ function About () {
         <Container>
             <Typography variant="h4" component={"h1"}>FAQs</Typography>
             <section>
+                <Typography variant="h5" component={"h2"}>I don't see any resources!</Typography>
+                <p>Try enabling insecure content in your browser.</p>
                 <Typography variant="h5" component={"h2"}>What is this app? Who is it for?</Typography>
                 <p>This is an app for sharing natural language processing resources with a built-in recommendation system.
                 Anyone who is interested in natural language processing can find something here.</p>
