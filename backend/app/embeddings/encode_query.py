@@ -16,7 +16,7 @@ def encode_query(model, query, tags = []):
     return query_embedding
 
 def load_embeddings():
-    in_path = '../shared/embeddings.pkl'
+    in_path = '/home/deploy/apps/nlp-resources/shared/embeddings.pkl'
 
     books_data = []
     with open(in_path, 'rb') as f:

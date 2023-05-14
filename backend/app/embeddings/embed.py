@@ -4,7 +4,7 @@ from pickle import dump as pickle_dump
 from sys import argv
 
 def main(id):
-    description = open(f'./tmp/{id}.description.txt', 'r').read().strip()
+    description = open(f'/home/deploy/apps/nlp-resources/tmp/{id}.description.txt', 'r').read().strip()
     # tags = eval(open(f'./tmp/{id}.keywords.txt', 'r').read().strip())
     model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
     description_embeddings = model.encode(description)
@@ -18,7 +18,7 @@ def main(id):
     # embedding = np.concatenate([description_embeddings, tags_embeddings], axis=0)
     # concatenating to obtain a single vector
     
-    with open('../shared/embeddings.pkl', 'ab') as f:
+    with open('/home/deploy/apps/nlp-resources/shared/embeddings.pkl', 'ab') as f:
         # pickle_dump({id: embedding}, f)
         pickle_dump({id: description_embeddings}, f)
 

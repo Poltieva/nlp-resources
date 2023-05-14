@@ -7,9 +7,9 @@ def main(model, id):
     embeddings = load_embeddings()
     for dict in embeddings:
         if id in dict.keys():
-            dict[id] = model.encode(open(f'./tmp/{id}.description.txt', 'r').read())
+            dict[id] = model.encode(open(f'/home/deploy/apps/nlp-resources/tmp/{id}.description.txt', 'r').read())
             break
-    with open('../shared/embeddings.pkl', 'wb') as f:
+    with open('/home/deploy/apps/nlp-resources/shared/embeddings.pkl', 'wb') as f:
         pickle.dump(embeddings, f)
     
 
