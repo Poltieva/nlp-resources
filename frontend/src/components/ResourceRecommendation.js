@@ -16,7 +16,7 @@ function ResourceRecommendation() {
       const response = await instance.get(`/recommend?query=${searchTerm}`);
       const data = response.data;
       setRecommendations(data.recommendations);
-      if (recommendations.length === 0) {
+      if (data.recommendations.length === 0) {
         setMessage("Nothing found");
       }
     } catch (error) {

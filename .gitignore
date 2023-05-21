@@ -23,3 +23,4 @@
 /backend/config/server.crt
 /backend/config/server.csr
 /backend/config/server.key
+/shared
