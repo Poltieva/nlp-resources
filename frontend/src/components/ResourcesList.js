@@ -1,6 +1,7 @@
 import React from 'react';
 import Resource from './Resource';
 import instance from './api/axios';
+import ReactPaginate from 'react-paginate';
 
 class ResourcesList extends React.Component {
     // Constructor
@@ -9,27 +10,41 @@ class ResourcesList extends React.Component {
 
         this.state = {
             items: [],
-            DataisLoaded: false
-        };
+            dataisLoaded: false,
+            pageCount: 0,
+            currentPage: 0
+          };
+
+        this.handlePageChange = this.handlePageChange.bind(this);
     }
 
     // ComponentDidMount is used to
     // execute the code
     componentDidMount() {
-        instance.get(
-            `/resources`)
-            .then((response) => {
-                this.setState({
-                    items: response.data,
-                    DataisLoaded: true
-                });
-            })
+        this.fetchResources(0);
+    }
+
+    fetchResources(page) {
+        instance.get(`/resources?page=${page + 1}`)
+          .then((response) => {
+            this.setState({
+              items: response.data.resources,
+              dataisLoaded: true,
+              pageCount: response.data.total_pages,
+              currentPage: page
+            });
+            console.log(this.state)
+        });
+    }
+
+    handlePageChange(selectedPage) {
+        const { selected } = selectedPage;
+        this.fetchResources(selected);
     }
 
     render() {
-        const {DataisLoaded, items} = this.state;
-        if (!DataisLoaded) return <div>
-            <p> Please wait some time.... </p></div>;
+        const { dataisLoaded, items, pageCount, currentPage } = this.state;
+        if (!dataisLoaded) return <div><p>Please wait some time....</p></div>;
 
         return (
             <main>
@@ -46,6 +61,26 @@ class ResourcesList extends React.Component {
                         }
                     </section>
                 </section>
+                <ReactPaginate
+                    previousLabel={'Previous'}
+                    nextLabel={'Next'}
+                    breakLabel={'...'}
+                    breakClassName={'break-me'}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={this.handlePageChange}
+                    subContainerClassName={'pages pagination'}
+                    forcePage={currentPage}
+                    containerClassName="pagination flex justify-center mt-8 mb-8"
+                    pageClassName="inline-block mx-1"
+                    pageLinkClassName="px-4 py-2 rounded-lg bg-blue-500 text-white"
+                    activeClassName="active"
+                    previousClassName="mr-4"
+                    nextClassName="ml-4"
+                    previousLinkClassName="px-4 py-2 rounded-lg bg-blue-500 text-white"
+                    nextLinkClassName="px-4 py-2 rounded-lg bg-blue-500 text-white"
+                />
             </main>
         )
     }

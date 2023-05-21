@@ -8,7 +8,11 @@ module Api
       rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
       def index
-        render json: Resource.joins(:user).select('resources.*, users.username, users.email').order(created_at: :desc).first(10), except: %i[user_id created_at updated_at]
+        resources = Resource.joins(:user)
+                            .select('resources.*, users.username, users.email')
+                            .order(created_at: :desc)
+                            .paginate(page: params[:page])
+        render json: {resources: resources, total_pages: resources.total_pages}
       end
 
       def show
